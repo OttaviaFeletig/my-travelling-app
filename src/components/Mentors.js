@@ -9,9 +9,7 @@ export default class Mentors extends Component {
   render() {
     return (
       this.props.mentors.map(mentor => (
-        <div className="mentor">
-          <Mentor name={mentor.name} imgPath={mentor.imgPath} />
-        </div>
+          <Mentor key={mentor.id} mentor={mentor} isBooked={this.props.isBooked} />
       ))
     )
   }
