@@ -5,7 +5,8 @@ import {BrowserRouter as Router, Route} from 'react-router-dom'
 // import Mentors from './components/Mentors'
 
 import Header from './components/layout/Header'
-import HelloWorld from './components/HelloWorld'
+import Home from './components/pages/Home'
+// import HelloWorld from './components/HelloWorld'
 import Cities from './components/pages/Cities'
 
 import './App.css';
@@ -89,7 +90,7 @@ class App extends Component {
         <div className="App">
           {/* <Mentors key="mentors" mentors={this.state.mentors} isBooked={this.isBooked} /> */}
           <Header />
-          <Route exact path='/' component={HelloWorld}></Route>
+          <Route exact path='/' component={Home}></Route>
           <Route exact path='/cities' component={Cities}></Route>
         </div>
      </Router>

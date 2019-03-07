@@ -6,7 +6,7 @@ export default class Login extends Component {
         background: 'white',
         color: '#32607F',
         border: 'none',
-        borderRadius: '40%'
+        borderRadius: '50%'
     }
     return (
       <div>
