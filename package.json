@@ -1,0 +1,25 @@
+{
+  "name": "my-travelling-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OttaviaFeletig/my-travelling-app.git"
+  },
+  "author": "Ottavia Feletig <ottavia.feletig@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OttaviaFeletig/my-travelling-app/issues"
+  },
+  "homepage": "https://github.com/OttaviaFeletig/my-travelling-app#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
