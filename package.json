@@ -2,9 +2,10 @@
   "name": "my-travelling-app",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"cd . && nodemon server.js\" \"cd client && npm start\""
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,10 @@
   },
   "homepage": "https://github.com/OttaviaFeletig/my-travelling-app#readme",
   "dependencies": {
-    "express": "^4.16.4"
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.17",
+    "concurrently": "^4.1.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"

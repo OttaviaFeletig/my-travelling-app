@@ -1,5 +1,8 @@
 .header{
     background: #32607F;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
 }
 .header_title {
     margin-left: 80px;
