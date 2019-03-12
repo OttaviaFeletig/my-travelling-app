@@ -4,40 +4,68 @@ const bodyParser = require('body-parser');
 const port = process.env.PORT || 5000;
 const app = express();
 
+const mongoose = require('mongoose');
+
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
-// app.get('/api/hello', (req, res) => res.send({'data':'HELLO FROM EXPRESS'}));
-// app.get('/api/cities', (req, res) => res.send({'data':'CITIES'}));
+const router = express.Router();
 
-app.post('/api/world', (req, res) => {
-    console.log(req.body);
-    res.send(
-        `I received your POST request. This is what you sent me ${req.body.post}`,
+const MongoClient = require('mongodb').MongoClient;
+
+const uri = "mongodb+srv://username:password@name-ikrcd.mongodb.net/name?retryWrites=true";
+
+const client = new MongoClient(uri, {
+    useNewUrlParser: true
+});
+
+client.connect(err => {
+    console.log('connected!')
+    console.log('error in connect ' + err)
+    const collection = client.db("myTravellingApp").collection("cities");
+
+    findCities(collection, function() {
+        console.log('in callback function')
+        client.close();
+    })
+    postCities(collection, function() {
+        console.log('in callback function')
+        client.close();
+    }) 
+
+    app.listen(port, () =>
+    console.log('Server is running on ' + port + 'port')
     );
 });
 
-var router = express.Router();
-// var router2 = express.Router();
+const findCities = (collection, callback) => {
+    router.get('/cities', (req, res) => {
+        console.log('in find cities')
+        collection.find().toArray((err, results) => {
+            if (err) throw err;
+            console.log(results)
+            res.send(results)
+            callback()
+        });
+    });
+}
+const postCities = (collection, callback) => {
+    router.post('/cities', (req, res) => {
+        var city = {
+            name: req.body.name,
+            country: req.body.country
+        };
+        collection.insertOne(city, (err, result) => {
+            if (err) {
+                console.log(err);
+            }
+            res.send('city added successfully');
+            callback();
+        })
+    });
+}
 
-router.use(function(req, res, next) {
 
-    // log each request to the console
-    console.log(req.method, req.url);
-
-    // continue doing what we were doing and go to the route
-    next(); 
-});
-
-router.get('/home', (req, res) => {
-    res.send({'data':'home page'});
-})
-router.get('/cities', (req, res) => {
-    res.send({'data':'cities page'});
-})
 app.use('/api', router);
-
-app.listen(port, () =>
-    console.log('Server is running on ' + port + 'port')
-    // console.log(router.stack[1].route)
-);

@@ -17,50 +17,50 @@ import londra from '../../cities_pic/londra.jpg'
 import parigi from '../../cities_pic/parigi.jpg'
 
 export default class Home extends Component {
-  state = {
-    response: '',
-    post: '',
-    responseToPost: ''
-  }
+  // state = {
+  //   response: '',
+  //   post: '',
+  //   responseToPost: ''
+  // }
 
-  componentDidMount() {
-    this.callApi()
-      .then(data => {
-        console.log(data.data)
-        this.setState({ response: data.data })
-        // console.log(this.state.response)
-      })
-      .catch(err => console.log(err));
-  }
+  // componentDidMount() {
+  //   this.callApi()
+  //     .then(data => {
+  //       console.log(data.data)
+  //       this.setState({ response: data.data })
+  //       // console.log(this.state.response)
+  //     })
+  //     .catch(err => console.log(err));
+  // }
 
-  callApi = async () => {
-    const response = await fetch('/api/home', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
-    });
-    const body = await response.json();
-    console.log(response)
-    if(response.status !== 200) throw Error(body.message);
+  // callApi = async () => {
+  //   const response = await fetch('/api/', {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Accept': 'application/json'
+  //     }
+  //   });
+  //   const body = await response.json();
+  //   console.log(response)
+  //   if(response.status !== 200) throw Error(body.message);
 
-    return body;
-  }
+  //   return body;
+  // }
 
-  handleSubmit = async (e) => {
-    e.preventDefault();
-    const response = await fetch('/api/world', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ post: this.state.post })
-    });
-    const body = await response.text();
+  // handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const response = await fetch('/api/world', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({ post: this.state.post })
+  //   });
+  //   const body = await response.text();
 
-    this.setState({ responseToPost: body });
-  };
+  //   this.setState({ responseToPost: body });
+  // };
   render(){
     const citiesPic = [[berlin, copenhagen, aalborg, torino], [barcellona, budapest, palermo, roma], [trieste, zurigo, londra, parigi]]
     const sliderStyle = {
@@ -101,7 +101,7 @@ export default class Home extends Component {
           )
         }
       </Slider>
-      <p>{this.state.response}</p>
+      {/* <p>{this.state.response}</p>
           <form onSubmit={this.handleSubmit}>
             <p>
               <strong>Post to Server:</strong>
@@ -113,7 +113,7 @@ export default class Home extends Component {
             />
             <button type='submit'>Submit</button>
           </form>
-          <p>{this.state.responseToPost}</p>
+          <p>{this.state.responseToPost}</p> */}
     </div>
   )
   }
