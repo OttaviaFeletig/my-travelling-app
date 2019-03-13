@@ -15,9 +15,9 @@ app.use(bodyParser.urlencoded({
 app.use(cors())
 
 const cityRoutes = require('./routes/api/cities');
-// const uri = "mongodb+srv:/newUser1/:newUser1@my-travelling-app-ikrcd.mongodb.net/myTravellingApp?retryWrites=true";
+
 const mongoDb = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_NAME}-ikrcd.mongodb.net/myTravellingApp?retryWrites=true`;
-// console.log(mongoDb)
+
 mongoose.connect(mongoDb, {useNewUrlParser: true})
     .then(() => console.log('connected!'))
     .catch(err => console.log(err));
