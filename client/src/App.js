@@ -7,7 +7,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom'
 import Header from './components/layout/Header'
 import Home from './components/pages/Home'
 // import HelloWorld from './components/HelloWorld'
-import Cities from './components/pages/Cities'
+import CityPage from './components/pages/CityPage'
 
 import './App.css';
 
@@ -19,7 +19,7 @@ class App extends Component {
         <div className="App">
           <Header />
           <Route exact path='/' component={Home}></Route>
-          <Route exact path='/cities' component={Cities}></Route>
+          <Route exact path='/cities' component={CityPage}></Route>
         </div>
      </Router>
       
