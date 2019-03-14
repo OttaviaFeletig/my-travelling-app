@@ -1,31 +1,28 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import {fetchCities} from '../../actions/citiesAction';
+import Cities from '../functional_component/Cities';
 
-import Cities from '../functional_component/Cities'
-export default class CityPage extends Component {
-  state = {
-    isFetching: false,
-    cities: []
-  }
+
+class CityPage extends Component {
 
   componentDidMount() {
-    this.fetchCities()
-  }
-
-  fetchCities = () => {
-    this.setState({isFetching: true})
-    fetch('http://localhost:5000/api/cities')
-      .then(response => response.json())
-      .then(data => {
-        this.setState({cities: data, isFetching: false})
-        console.log(this.state.cities)
-      })
-      .catch(err => console.log(err))
+    this.props.dispatch(fetchCities())
   } 
 
   render() {
     //destructuring state
     //it can also be written as const cities = this.state.cities
-    const { cities } = this.state
+    const { cities, error, loading } = this.props.cities
+    console.log(cities)
+    console.log(error)
+    console.log(loading)
+    if(error) {
+        return <div>Error! { error.message }</div>
+    }
+    if(loading) {
+      return <div>Loading...</div>
+    }
     return (
       <div style={citiesStyle}>
         <Cities cities={cities} />
@@ -36,3 +33,13 @@ export default class CityPage extends Component {
 const citiesStyle = {
   paddingTop: '100px'
 }
+
+const mapStateProps = (state) => {
+  return {
+    cities: state.cities,
+    loading: state.loading,
+    error: state.error
+  }
+}
+
+export default connect(mapStateProps)(CityPage)
