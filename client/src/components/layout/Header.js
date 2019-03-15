@@ -10,7 +10,7 @@ export default class Header extends Component {
     return(
       <div className="header">
         <div className='header_title'>
-          <h1>My travels</h1>
+          <h1>MYtinerary</h1>
           <Login />  
         </div>
         <SideBar />

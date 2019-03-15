@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import {fetchCities} from '../../actions/citiesAction';
 import Cities from '../functional_component/Cities';
-
-
+import FilterForm from '../layout/FilterForm';
 class CityPage extends Component {
 
   componentDidMount() {
@@ -14,9 +15,9 @@ class CityPage extends Component {
     //destructuring state
     //it can also be written as const cities = this.state.cities
     const { cities, error, loading } = this.props.cities
-    console.log(cities)
-    console.log(error)
-    console.log(loading)
+    // console.log(cities)
+    // console.log(error)
+    // console.log(loading)
     if(error) {
         return <div>Error! { error.message }</div>
     }
@@ -25,7 +26,8 @@ class CityPage extends Component {
     }
     return (
       <div style={citiesStyle}>
-        <Cities cities={cities} />
+        <FilterForm cities={cities} />
+        {/* <Cities cities={cities} /> */}
       </div>
     )
   }
@@ -42,4 +44,7 @@ const mapStateProps = (state) => {
   }
 }
 
+Cities.propTypes = {
+  cities: PropTypes.array.isRequired
+}
 export default connect(mapStateProps)(CityPage)

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import City from './City'
 
-export default class Cities extends Component {
+class Cities extends Component {
   render() {
     const { cities } = this.props
     return (
@@ -18,3 +18,5 @@ export default class Cities extends Component {
 Cities.propTypes = {
   cities: PropTypes.array.isRequired
 }
+
+export default Cities
