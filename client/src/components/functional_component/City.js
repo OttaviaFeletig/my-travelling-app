@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
+
 class City extends Component {
   render() {
-      const { name, country } = this.props.city
+    const { _id, name, country } = this.props.city
     return (
       <div>
-        <div style={cityStyle}>{name} - {country}</div>
+        <Link to={'/itineraries/' + _id} ><div style={cityStyle}>{name} - {country}</div></Link>
       </div>
     )
   }

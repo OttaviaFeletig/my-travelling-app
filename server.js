@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({
 app.use(cors())
 
 const cityRoutes = require('./routes/api/cities');
+const itineraryRoutes = require('./routes/api/itineraries')
 
 const mongoDb = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_NAME}-ikrcd.mongodb.net/myTravellingApp?retryWrites=true`;
 
@@ -24,6 +25,7 @@ mongoose.connect(mongoDb, {useNewUrlParser: true})
 
 
 app.use('/api/cities', cityRoutes);
+app.use('/api/itineraries', itineraryRoutes);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

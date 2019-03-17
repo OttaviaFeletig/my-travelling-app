@@ -6,6 +6,7 @@ import Cities from '../functional_component/Cities';
 
 import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
+// import {DebounceInput} from 'react-debounce-input';
 
 
 
@@ -29,11 +30,14 @@ class FilterForm extends Component {
             
         <div>
             <Col sm={8}>
-                <Form.Control type="text" placeholder="Search your city..." id='filter' value={ this.state.searchInput } onChange={this.handleSearch} />
+                <Form.Control
+                    type="text"
+                    placeholder="Search your city..."
+                    id='filter'
+                    value={ this.state.searchInput }
+                    onChange={this.handleSearch}
+                />
             </Col>
-         {/* <label htmlFor='filter'>Filter by City:</label>
-         <Form.Control type='text' id='filter' value={ this.state.searchInput } onChange={this.handleSearch} /> */}
-            {/* <input type='text' id='filter' value={ this.state.searchInput } onChange={this.handleSearch} ></input> */}
             <Cities cities={filteredCities} />
         </div>
         )
@@ -43,6 +47,6 @@ class FilterForm extends Component {
 
 FilterForm.propTypes = {
     cities: PropTypes.array.isRequired
-}
+  }
 
 export default FilterForm

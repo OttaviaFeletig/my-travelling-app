@@ -1,9 +1,14 @@
 const mongoose = require('mongoose')
 
 const citiesSchema = new mongoose.Schema({
-    name: String,
-    country: String,
-    
+    name: {
+        type: String,
+        required: true
+    },
+    country: {
+        type: String,
+        required: true
+    } 
 })
 
 //name if module is the singular of how the database is called
