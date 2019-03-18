@@ -21,6 +21,7 @@ import arrow from '../../icons/arrow.png'
 export default class Home extends Component {
   render(){   
     // const citiesPic = [[berlin, copenhagen, aalborg, torino], [barcellona, budapest, palermo, roma], [trieste, zurigo, londra, parigi]]
+    console.log(this.props)
   return (
     <div className='home'>
 

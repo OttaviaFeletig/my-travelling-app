@@ -12,6 +12,9 @@ class CityPage extends Component {
   } 
 
   render() {
+
+    console.log(this.props)
+
     //destructuring state
     //it can also be written as const cities = this.state.cities
     const { cities, error, loading } = this.props.cities
