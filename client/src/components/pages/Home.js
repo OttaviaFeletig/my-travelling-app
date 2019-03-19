@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+
 // import Slider from 'react-animated-slider'
 import 'react-animated-slider/build/horizontal.css'
 import '../../style/Home.css'
@@ -18,10 +19,10 @@ import arrow from '../../icons/arrow.png'
 // import londra from '../../cities_pic/londra.jpg'
 // import parigi from '../../cities_pic/parigi.jpg'
 
-export default class Home extends Component {
+class Home extends Component {
   render(){   
     // const citiesPic = [[berlin, copenhagen, aalborg, torino], [barcellona, budapest, palermo, roma], [trieste, zurigo, londra, parigi]]
-    console.log(this.props)
+    // console.log(this.props)
   return (
     <div className='home'>
 
@@ -78,3 +79,5 @@ const linkStyle = {
 //   borderRadius: '50%',
 //   border: 'solid #32607F 4px'
 // }
+
+export default Home

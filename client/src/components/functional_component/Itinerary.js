@@ -5,8 +5,6 @@ export default class Itinerary extends Component {
   render() {
       
     const { title, profilePic, duration, price, rating } = this.props.itinerary
-    console.log(this.props.itinerary)
-    console.log(profilePic)
     return (
       <div style={itinerayStyle}>
         <img style={imgStyle} src={profilePic} alt='itineraryPic'></img>
@@ -15,7 +13,7 @@ export default class Itinerary extends Component {
             <div style={detailInfoStyle}>Duration: {duration} hours | Price: {price} € | Rating: {rating}</div>
         </div>
       </div>
-    )
+    )    
   }
 }
 

@@ -11,20 +11,33 @@ class ItineraryPage extends Component {
   } 
 
   render() {
-    // console.log(this.props.itineraries)
+    // console.log(this.props.location)
     const { itineraries } = this.props.itineraries
-    return (
-      <div style={itinerariesPage}>
-        { itineraries.map(itinerary => 
-          <Itinerary key={itinerary._id} itinerary={itinerary} />
-        ) }
-      </div>
-    )
+    console.log(itineraries.length)
+    if(itineraries.length === 0){
+      return(
+        <div style={noItineraryesStyle}>
+          <p>There are no itineraries for this city yet</p>
+        </div>
+      )
+    }else{
+      return (
+        <div style={itinerariesPage}>
+          { itineraries.map(itinerary => 
+            <Itinerary key={itinerary._id} itinerary={itinerary} />
+          ) }
+        </div>
+      )
+    }
   }
 }
 
 const itinerariesPage = {
   paddingTop: '80px',
+}
+
+const noItineraryesStyle = {
+  paddingTop: '80px'
 }
 
 const mapStateProps = (state) => {

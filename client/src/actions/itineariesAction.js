@@ -24,11 +24,12 @@ export const fetchItinerariesFailure = (error) => {
 };
 
 export function fetchItineraries(cityId) {
+
     return dispatch => {
         dispatch(fetchItinerariesBegin(true));
         fetch('http://localhost:5000/api/itineraries/' + cityId)
             .then(response => {
-                console.log(response)
+                // console.log(response)
                 if(!response.ok){
                     throw Error(response.statusText)
                 }
