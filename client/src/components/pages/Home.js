@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 // import Slider from 'react-animated-slider'
-import 'react-animated-slider/build/horizontal.css'
+// import 'react-animated-slider/build/horizontal.css'
 import '../../style/Home.css'
 
 import arrow from '../../icons/arrow.png'

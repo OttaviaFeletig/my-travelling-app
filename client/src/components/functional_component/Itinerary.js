@@ -1,19 +1,30 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+import Activities from './Activities';
 
 export default class Itinerary extends Component {
+  state = {
+    hideActivitiy: true
+  }
+  changeVisibility = () => {
+    this.setState({hideActivitiy : !this.state.hideActivitiy})
+  }
   render() {
       
-    const { title, profilePic, duration, price, rating } = this.props.itinerary
+    const { title, profilePic, duration, price, rating, activities } = this.props.itinerary
     return (
-      <div style={itinerayStyle}>
-        <img style={imgStyle} src={profilePic} alt='itineraryPic'></img>
-        <div style={infoStyle}>
-            <h2 style={titleStyle}>{title}</h2>
-            <div style={detailInfoStyle}>Duration: {duration} hours | Price: {price} € | Rating: {rating}</div>
+      <div>
+        <div style={itinerayStyle} onClick={this.changeVisibility}>
+          <img style={imgStyle} src={profilePic} alt='itineraryPic'></img>
+          <div style={infoStyle}>
+              <h2 style={titleStyle}>{title}</h2>
+              <div style={detailInfoStyle}>Duration: {duration} hours | Price: {price} € | Rating: {rating}</div>
+          </div>
         </div>
+        {!this.state.hideActivitiy && <Activities style={itinerayStyle} activities={activities} />}
       </div>
-    )    
+    )  
   }
 }
 

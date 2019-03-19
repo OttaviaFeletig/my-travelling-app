@@ -11,9 +11,8 @@ class ItineraryPage extends Component {
   } 
 
   render() {
-    // console.log(this.props.location)
     const { itineraries } = this.props.itineraries
-    console.log(itineraries.length)
+    // console.log(itineraries.length)
     if(itineraries.length === 0){
       return(
         <div style={noItineraryesStyle}>
