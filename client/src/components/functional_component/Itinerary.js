@@ -15,14 +15,15 @@ export default class Itinerary extends Component {
     const { title, profilePic, duration, price, rating, activities } = this.props.itinerary
     return (
       <div>
-        <div style={itinerayStyle} onClick={this.changeVisibility}>
-          <img style={imgStyle} src={profilePic} alt='itineraryPic'></img>
+        <div style={itinerayStyle}>
+          <img style={imgStyle} src={profilePic} alt='itineraryPic' onClick={this.changeVisibility}></img>
+          {!this.state.hideActivitiy && <Activities style={itinerayStyle} activities={activities} />}
           <div style={infoStyle}>
               <h2 style={titleStyle}>{title}</h2>
               <div style={detailInfoStyle}>Duration: {duration} hours | Price: {price} € | Rating: {rating}</div>
           </div>
         </div>
-        {!this.state.hideActivitiy && <Activities style={itinerayStyle} activities={activities} />}
+        
       </div>
     )  
   }
@@ -50,7 +51,8 @@ const infoStyle = {
     width: '90%',
     alignSelf: 'center',
     height: '80px',
-    borderRadius: '0px 0px 10px 10px'
+    borderRadius: '0px 0px 10px 10px',
+    marginTop: '-1px'
 }
 
 const titleStyle = {

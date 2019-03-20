@@ -1,5 +1,19 @@
 .slider{
-    height: 200px;
+    height: 300px;
+    background-color: #32607F;
+    width: 90%;
+    display: flex;
+    justify-self: start;
+    margin: 0;
+}
+.slider a.nextButton {
+    right: 0px;
+}
+.slider a.previousButton {
+    left: 0px;
+}
+polygon{
+    fill: white;
 }
 /* .slide{
     width: 100%;
