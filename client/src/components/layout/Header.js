@@ -4,6 +4,7 @@ import {Link, withRouter} from 'react-router-dom';
 import SideBar from './SideBar'
 // import Login from '../pages/Login'
 import GoBack from '../functional_component/GoBack'
+import noUserIcon from '../../icons/nouser.png'
 import '../../style/Header.css'
 
 class Header extends Component {
@@ -14,21 +15,34 @@ class Header extends Component {
     let goBack = null
     if(actualLocation.includes('itineraries')){
       goBack = <Link to='/cities'><GoBack /></Link>   
+    }else if(actualLocation.includes('signUp')){
+      goBack = <Link to='logIn'><GoBack /></Link>
     }
     return(
-      <div className="header">
+      <div>
+        <div className="header">
         <div className='header_title'>
           <h1>MYtinerary</h1>
-          
-          {/* <Login />   */}
+          <img style={userIconStyle} src={noUserIcon} alt="profilePic"/>
+          {goBack}
         </div>
-        {goBack}
+        
+        
+        </div>
         <SideBar />
       </div>
+      
       
     )
     
   } 
+}
+
+const userIconStyle = {
+  width: '18%',
+  border: 'solid 2px white',
+  borderRadius: '50%',
+  marginLeft: '20px'
 }
 
 export default withRouter(Header)

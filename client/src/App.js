@@ -3,13 +3,15 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 
 
-import Header from './components/layout/Header'
-import Home from './components/pages/Home'
-import CityPage from './components/pages/CityPage'
+import Header from './components/layout/Header';
+import Home from './components/pages/Home';
+import CityPage from './components/pages/CityPage';
 import ItineraryPage from './components/pages/ItineraryPage';
-
+import LogInPage from './components/pages/LogInPage'
+import SignUpPage from './components/pages/SignUpPage';
 
 import './App.css';
+
 
 
 class App extends Component {
@@ -28,6 +30,8 @@ class App extends Component {
           <Route exact path='/' component={Home}></Route>
           <Route exact path='/cities' component={CityPage}></Route>
           <Route exact path='/itineraries/:id' component={ItineraryPage}></Route>
+          <Route exact path='/logIn' component={LogInPage}></Route>
+          <Route exact path='/signUp' component={SignUpPage}></Route>
         </div>
      </Router>
       

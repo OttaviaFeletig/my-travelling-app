@@ -8,6 +8,8 @@ export default function SideBar() {
       <div style={lineStyle}></div>
       <a className='menuItem' href='/cities'>Cities</a>
       <div style={lineStyle}></div>
+      <a className='menuItem' href='/logIn'>My account</a>
+      <div style={lineStyle}></div>
     </Menu>
   )
 }

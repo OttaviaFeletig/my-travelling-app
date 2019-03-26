@@ -13,14 +13,16 @@ export default class GoBack extends Component {
 }
 
 const goBackStyle = {
-  position: 'absolute',
-  top: '10px',
+  position: 'relative',
+  top: '3px',
   right: '15px',
   display: 'flex',
-  justifyContent: 'flex-end'
+  justifyContent: 'flex-end',
+  margin: '0',
+  width: '100%'
 }
 
 const goBackArrowStyle = {
-    width: '15%',
+    width: '35%',
     alignSelf: 'center'
 }

@@ -4,6 +4,7 @@ import Slider from 'react-animated-slider'
 
 import 'react-animated-slider/build/horizontal.css'
 import '../../style/Slider.css'
+
 export default class Activities extends Component {
   render() {
       const { activities } = this.props
@@ -35,7 +36,6 @@ export default class Activities extends Component {
 const sliderContainerStyle = {
   display: 'flex',
   justifyContent: 'center',
-  transition: 'all 1.5s linear 1.5s'
 }
 
 const sliderStyle = {
@@ -59,7 +59,7 @@ const activityStyle = {
     paddingTop: '20px',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
 }
 
 const cropStyle = {
@@ -72,7 +72,6 @@ const cropStyle = {
 const imgStyle = {
     width: '110%',
     height: 'auto',
-    margin: '0 0 0 0'
 }
 
 const nameStyle = {

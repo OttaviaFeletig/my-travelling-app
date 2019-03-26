@@ -4,7 +4,8 @@
     width: 90%;
     display: flex;
     justify-self: start;
-    margin: 0;
+    margin-top: -1px;
+    border-radius: 0px 0px 10px 10px;
 }
 .slider a.nextButton {
     right: 0px;

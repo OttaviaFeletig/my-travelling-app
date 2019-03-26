@@ -27,9 +27,9 @@ class Home extends Component {
     <div className='home'>
 
       <Link style={linkStyle} to='/cities'>
-      
+
         <img style={arrowStyle} src={arrow} alt='arrow' />
-      
+
       </Link>
       {/* <Slider autoplay={2000} style={sliderStyle}>
         {

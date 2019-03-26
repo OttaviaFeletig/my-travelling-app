@@ -3,16 +3,18 @@
     position: fixed;
     width: 100%;
     z-index: 1;
+    display: flex;
+    justify-content: flex-end;
 }
 .header_title {
-    width: 100%;
+    width: 80%;
     color: white;
     text-align: center;
     padding: 10px;
     overflow: auto;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 .bm-item {
     display: inline-block;
