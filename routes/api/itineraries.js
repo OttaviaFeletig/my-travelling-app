@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose')
 
+//importing the itinerary model
 const itineraryModel = require('../../models/itinerary')
 
 router.get('/', (req, res) => {
