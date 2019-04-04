@@ -1,7 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import axios from 'axios';
 
 export default class SignUpPage extends Component {
     
@@ -10,18 +11,58 @@ export default class SignUpPage extends Component {
         avatarPicture: '',
         email: '',
         password: '',
-        passwordConfirmation: ''
+        passwordConfirmation: '',
     }
 
     getSignUpData = (event) => {
         this.setState({ [event.target.name]: event.target.value })
-        console.log(this.state)
+        // console.log(this.state)
     }
+
+    onSubmit = (event) => {
+        // to prevent the page to reload when clicking on submit
+        event.preventDefault();
+        this.registerNewUser();
+    }
+
+    registerNewUser = () => {
+        if(this.state.password === this.state.passwordConfirmation){
+            axios.post('http://localhost:5000/api/users/register', {
+                username: this.state.username,
+                avatarPicture: this.state.avatarPicture,
+                email: this.state.email,
+                password: this.state.password,
+                passwordConfirmation: this.state.passwordConfirmation
+            })
+            .then(res => {
+                console.log(res)
+                if(res.status === 200){
+                    console.log(res.data)
+                    this.props.history.push({
+                        pathname: 'signUpConfirmation',
+                        state: {detail: res.data}
+                    })
+                } else {
+                    alert('Something went wrong, please try again')
+                }
+            })
+        } else {
+            alert('The passwords are not matching!')
+        }
+        
+    }
+
+    
+        
+    
+
   render() {
     
     return (
       <div style={signUpPageStyle}>
-        <Form>
+
+
+        <Form onSubmit={this.onSubmit}>
             <Form.Group controlId="formBasicUsername">
                 <Form.Label>Username</Form.Label>
                 <Form.Control type="text" name='username' value={this.state.username} onChange={this.getSignUpData} placeholder="Enter username" />

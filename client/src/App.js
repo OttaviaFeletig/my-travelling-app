@@ -11,6 +11,7 @@ import LogInPage from './components/pages/LogInPage'
 import SignUpPage from './components/pages/SignUpPage';
 
 import './App.css';
+import SignUpConfirmationPage from './components/pages/SignUpConfirmationPage';
 
 
 
@@ -32,6 +33,7 @@ class App extends Component {
           <Route exact path='/itineraries/:id' component={ItineraryPage}></Route>
           <Route exact path='/logIn' component={LogInPage}></Route>
           <Route exact path='/signUp' component={SignUpPage}></Route>
+          <Route exact path='/signUpConfirmation' component={SignUpConfirmationPage}></Route>
         </div>
      </Router>
       
