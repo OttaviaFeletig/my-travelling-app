@@ -6,7 +6,13 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors')
 
+const passport = require('passport');
+
 const app = express();
+
+//importing the mongoURI
+const db = require('./config/keys').mongoURI;
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
@@ -18,16 +24,28 @@ const cityRoutes = require('./routes/api/cities');
 const itineraryRoutes = require('./routes/api/itineraries');
 const userRoutes = require('./routes/api/users');
 
-const mongoDb = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_NAME}-ikrcd.mongodb.net/myTravellingApp?retryWrites=true`;
+// const keys = {
+//     mongoURI: `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_NAME}-ikrcd.mongodb.net/myTravellingApp?retryWrites=true`,
+//     secretOrKey: "secret"    
+// };
 
-mongoose.connect(mongoDb, {useNewUrlParser: true, useCreateIndex: true})
+mongoose.connect(db, {useNewUrlParser: true, useCreateIndex: true})
     .then(() => console.log('connected!'))
     .catch(err => console.log(err));
 
 //using the routes for a specific api
 app.use('/api/cities', cityRoutes);
 app.use('/api/itineraries', itineraryRoutes);
+
+//passport middleware
+// app.use(passport.initialize());
+
+//passport configuration
+// require('./config/passport')(passport);
+
 app.use('/api/users', userRoutes);
+
+
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

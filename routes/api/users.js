@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const userModel = require('../../models/user');
+const jwt = require("jsonwebtoken");
+const keys = require("../../config/keys");
 
 router.post('/register', (req, res) => {
 
@@ -23,7 +25,8 @@ router.post('/register', (req, res) => {
             const newUser = new userModel({
                 username: req.body.username,
                 email: req.body.email,
-                password: req.body.password,  
+                password: req.body.password,
+                avatarPicture: req.body.avatarPicture || null  
             });
           
             //hash password before saving it
@@ -38,6 +41,51 @@ router.post('/register', (req, res) => {
                 });
             });
         });
+});
+
+router.post('/login', (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    //find user by email
+
+    userModel.findOne({email}).then(user => {
+        //check if user exists
+        if(!user) {
+            return res.status(400).json({emailnotfound: 'Email not found'});
+        }
+
+        //check password
+        bcrypt.compare(password, user.password).then(isMatch => {
+            if(isMatch){
+                //create JWT payload
+                const payload = {
+                    id: user.id,
+                    username: user.username
+                };
+
+                //sign token
+                jwt.sign(
+                    payload,
+                    keys.secretOrKey,
+                    {
+                        expiresIn: 31556926 // 1 year in seconds
+                    },
+                    (err, token) => {
+                        res.json({
+                            success: true,
+                            token: 'Bearer' + token
+                        });
+                    }
+                );
+            } else {
+                return res 
+                    .status(400)
+                    .json({ passwordincorrect: 'Password incorrect' })
+            }
+        })
+        .catch(err => console.log(err));
+    });
 });
 
 

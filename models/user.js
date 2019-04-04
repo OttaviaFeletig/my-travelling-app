@@ -7,7 +7,6 @@ const usersSchema = new mongoose.Schema({
     },
     avatarPicture: {
         type: String,
-        // required: true
     },
     email: {
         type: String,
@@ -20,7 +19,6 @@ const usersSchema = new mongoose.Schema({
     },
     passwordConfirmation : {
         type: String,
-        // required: true
     },
     date: {
         type: Date,
