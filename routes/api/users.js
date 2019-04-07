@@ -26,7 +26,7 @@ router.post('/register', (req, res) => {
                 username: req.body.username,
                 email: req.body.email,
                 password: req.body.password,
-                avatarPicture: req.body.avatarPicture || null  
+                avatarPicture: req.body.avatarPicture  
             });
           
             //hash password before saving it
@@ -69,12 +69,12 @@ router.post('/login', (req, res) => {
                     payload,
                     keys.secretOrKey,
                     {
-                        expiresIn: 31556926 // 1 year in seconds
+                        expiresIn: 3600 
                     },
                     (err, token) => {
                         res.json({
                             success: true,
-                            token: 'Bearer' + token
+                            token: token,
                         });
                     }
                 );

@@ -1,14 +1,15 @@
-import React from 'react'
-import { slide as Menu } from 'react-burger-menu'
+import React from 'react';
+import { slide as Menu } from 'react-burger-menu';
+import { Link } from 'react-router-dom';
 
 export default function SideBar() {
   return (
     <Menu>
-      <a className='menuItem' href='/'>Home</a>
+      <Link className='menuItem' to='/'>Home</Link>
       <div style={lineStyle}></div>
-      <a className='menuItem' href='/cities'>Cities</a>
+      <Link className='menuItem' to='/cities'>Cities</Link>
       <div style={lineStyle}></div>
-      <a className='menuItem' href='/logIn'>My account</a>
+      <Link className='menuItem' to='/logIn'>My account</Link>
       <div style={lineStyle}></div>
     </Menu>
   )

@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 
-
-import unknownAvatar from '../../icons/unknownAvatar.jpg';
-
 export default class SignUpConfirmationPage extends Component {
 
     
@@ -15,7 +12,7 @@ export default class SignUpConfirmationPage extends Component {
       <div style={confPageStyle}>
         <h3>Thank you for registering!</h3>
         <p>You submitted the following information:</p>
-        {avatarPicture === null ? <img style={avatarStyle} src={unknownAvatar} alt='avatar'></img> : <img style={avatarStyle} src={avatarPicture} alt='avatar'></img>}
+        <img style={avatarStyle} src={avatarPicture} alt='avatar'></img>
         <ul>
             <li>Username: {username}</li>
             <li>Email: {email}</li>

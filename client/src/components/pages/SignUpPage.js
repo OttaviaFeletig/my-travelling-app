@@ -2,9 +2,16 @@ import React, { Component } from 'react';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import axios from 'axios';
+import isEmpty from 'is-empty';
 
-export default class SignUpPage extends Component {
+import PropTypes from 'prop-types';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
+import {registerUser} from '../../actions/usersAction';
+
+class SignUpPage extends Component {
     
     state = {
         username: '',
@@ -16,52 +23,45 @@ export default class SignUpPage extends Component {
 
     getSignUpData = (event) => {
         this.setState({ [event.target.name]: event.target.value })
-        // console.log(this.state)
     }
 
     onSubmit = (event) => {
         // to prevent the page to reload when clicking on submit
         event.preventDefault();
-        this.registerNewUser();
-    }
 
-    registerNewUser = () => {
-        if(this.state.password === this.state.passwordConfirmation){
-            axios.post('http://localhost:5000/api/users/register', {
-                username: this.state.username,
-                avatarPicture: this.state.avatarPicture,
-                email: this.state.email,
-                password: this.state.password,
-                passwordConfirmation: this.state.passwordConfirmation
-            })
-            .then(res => {
-                console.log(res)
-                if(res.status === 200){
-                    console.log(res.data)
-                    this.props.history.push({
-                        pathname: 'signUpConfirmation',
-                        state: {detail: res.data}
-                    })
-                } else {
-                    alert('Something went wrong, please try again')
-                }
-            })
-        } else {
-            alert('The passwords are not matching!')
+        const username = this.state.username;
+        const email = this.state.email;
+        let avatarPicture = this.state.avatarPicture;
+        const password = this.state.password;
+        const passwordConfirmation = this.state.passwordConfirmation;
+
+        if(isEmpty(username) || isEmpty(email) || isEmpty(password) || isEmpty(passwordConfirmation)){
+            alert('Fill in all the fields')
         }
         
-    }
+        if(password !== passwordConfirmation){
+            alert('The passwords are not matching')
+        }
 
-    
-        
-    
+        if(avatarPicture === ''){
+            avatarPicture = 'https://png.pngtree.com/element_origin_min_pic/16/11/14/910617dff00c65cc7c1419fcf0b9f0c1.jpg';
+        }
+
+        const newUser = {
+            username: username,
+            email: email,
+            avatarPicture: avatarPicture,
+            password: password,
+            passwordConfirmation: passwordConfirmation
+        };
+
+        this.props.registerUser(newUser, this.props.history)
+    }
 
   render() {
     
     return (
       <div style={signUpPageStyle}>
-
-
         <Form onSubmit={this.onSubmit}>
             <Form.Group controlId="formBasicUsername">
                 <Form.Label>Username</Form.Label>
@@ -95,4 +95,21 @@ export default class SignUpPage extends Component {
 const signUpPageStyle = {
     paddingTop: '80px',
     margin: '0 20px 0 20px'
-  }
+}
+
+
+SignUpPage.propTypes = {
+    registerUser: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.user
+    }
+}
+
+export default connect(
+    mapStateToProps, 
+    {registerUser}
+)(withRouter(SignUpPage));
