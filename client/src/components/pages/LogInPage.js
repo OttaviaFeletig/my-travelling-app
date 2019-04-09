@@ -94,4 +94,4 @@ LogInPage.propTypes = {
   user: PropTypes.object.isRequired,
   logInUser: PropTypes.func.isRequired
 }
-export default connect(mapStateProps, {logInUser})(withRouter(LogInPage));  
+export default connect(mapStateProps, {logInUser})(LogInPage);  

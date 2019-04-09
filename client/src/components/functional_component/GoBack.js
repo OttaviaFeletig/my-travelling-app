@@ -18,11 +18,11 @@ const goBackStyle = {
   right: '15px',
   display: 'flex',
   justifyContent: 'flex-end',
-  margin: '0',
-  width: '100%'
+  margin: '0 0 0 22px',
+  width: '22px'
 }
 
 const goBackArrowStyle = {
-    width: '35%',
+    width: '100%',
     alignSelf: 'center'
 }

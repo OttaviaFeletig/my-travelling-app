@@ -14,23 +14,55 @@ export default class Activities extends Component {
       console.log(images)
       console.log(activities)
     return (
-      <div style={sliderContainerStyle}>
-        <Slider style={sliderStyle}>
-        {
-          activities.map((activity, index) =>
-          <div style={activityStyle} key={index}>
-            <p style={nameStyle}>{ activity.name }</p>
-            <div style={cropStyle}>
-              <img style={imgStyle} src={activity.pic} alt='activityPic' />
+      <div style={activitiesContainerStyle}>
+        <div style={sliderContainerStyle}>
+          <Slider style={sliderStyle}>
+          {
+            activities.map((activity, index) =>
+            <div style={activityStyle} key={index}>
+              <p style={nameStyle}>{ activity.name }</p>
+              <div style={cropStyle}>
+                <img style={imgStyle} src={activity.pic} alt='activityPic' />
+              </div>
+              
             </div>
-            
-          </div>
-          )
-        }
-      </Slider>
+            )
+          }
+        </Slider>
+          
+        
+        </div>
+        
+        <div style={commentsContainerStyle}>
+            <div style={commentStyle}>
+              <p>blablabla</p>
+            </div>
+          
+        </div>
+
       </div>
     )
   }
+}
+
+const activitiesContainerStyle = {
+  display: 'flex',
+  flexDirection: 'column'
+}
+
+const commentsContainerStyle = {
+  display: 'flex',
+  justifySelf: 'center',
+  justifyContent: 'center',
+  background:' #32607F',
+  width: '90%',
+  borderRadius: '0px 0px 10px 10px'
+}
+
+const commentStyle = {
+  // background: 'grey',
+  width: '50%',
+  height: '100%'
 }
 
 const sliderContainerStyle = {

@@ -112,4 +112,4 @@ const mapStateToProps = (state) => {
 export default connect(
     mapStateToProps, 
     {registerUser}
-)(withRouter(SignUpPage));
+)(SignUpPage);

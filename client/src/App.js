@@ -9,6 +9,7 @@ import CityPage from './components/pages/CityPage';
 import ItineraryPage from './components/pages/ItineraryPage';
 import LogInPage from './components/pages/LogInPage'
 import SignUpPage from './components/pages/SignUpPage';
+import MyAccountPage from './components/pages/MyAccountPage';
 
 import './App.css';
 import SignUpConfirmationPage from './components/pages/SignUpConfirmationPage';
@@ -34,6 +35,7 @@ class App extends Component {
           <Route exact path='/logIn' component={LogInPage}></Route>
           <Route exact path='/signUp' component={SignUpPage}></Route>
           <Route exact path='/signUpConfirmation' component={SignUpConfirmationPage}></Route>
+          <Route exact path='/myAccount' component={MyAccountPage}></Route>
         </div>
      </Router>
       
