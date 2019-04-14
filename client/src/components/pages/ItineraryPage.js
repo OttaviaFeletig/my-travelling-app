@@ -33,6 +33,7 @@ class ItineraryPage extends Component {
 
 const itinerariesPage = {
   paddingTop: '80px',
+  paddingBottom: '80px',
 }
 
 const noItineraryesStyle = {

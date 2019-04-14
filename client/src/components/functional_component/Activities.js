@@ -35,7 +35,7 @@ export default class Activities extends Component {
         
         <div style={commentsContainerStyle}>
             <div style={commentStyle}>
-              <p>blablabla</p>
+              <p>blablablwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwa</p>
             </div>
           
         </div>
@@ -52,7 +52,7 @@ const activitiesContainerStyle = {
 
 const commentsContainerStyle = {
   display: 'flex',
-  justifySelf: 'center',
+  alignSelf: 'center',
   justifyContent: 'center',
   background:' #32607F',
   width: '90%',
@@ -60,9 +60,13 @@ const commentsContainerStyle = {
 }
 
 const commentStyle = {
-  // background: 'grey',
-  width: '50%',
-  height: '100%'
+  background: '#D3D3D3',
+  width: '80%',
+  height: '100%',
+  borderRadius: '10px 10px 10px 10px',
+  marginBottom: '20px',
+  padding: '5px 5px 5px 5px',
+  wordBreak: 'break-all'
 }
 
 const sliderContainerStyle = {

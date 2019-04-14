@@ -9,7 +9,7 @@ class SideBar extends Component {
 
   render() {
     const {isAuthenticated} = this.props.user;
-    console.log(isAuthenticated)
+    console.log(this.props.user)
     return (
       <Menu>
         <Link className='menuItem' to='/'>Home</Link>

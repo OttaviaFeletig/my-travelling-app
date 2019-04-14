@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs');
 const userModel = require('../../models/user');
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
+const passport = require('passport');
+
 
 router.post('/register', (req, res) => {
 
@@ -60,6 +62,7 @@ router.post('/login', (req, res) => {
             if(isMatch){
                 //create JWT payload
                 const payload = {
+                    id: user.id,
                     username: user.username,
                     avatarPicture: user.avatarPicture
                 };
@@ -74,7 +77,7 @@ router.post('/login', (req, res) => {
                     (err, token) => {
                         res.json({
                             success: true,
-                            token: token,
+                            token: 'bearer ' + token,
                         });
                     }
                 );
@@ -88,6 +91,23 @@ router.post('/login', (req, res) => {
     });
 });
 
+
+router.get(
+    "/",
+    passport.authenticate("jwt", { session: false }),
+    (req, res) => {
+      userModel.findOne({ _id: req.user.id })
+        .then(response => {
+            console.log('user get route response: ' + response)
+          // remove password before sending back
+          const userDetails = Object.assign({}, response._doc);
+          delete userDetails.password;
+  
+          res.json(userDetails);
+        })
+        .catch(err => res.status(404).json({ error: "User does not exist!" }));
+    }
+);
 
 
 module.exports = router

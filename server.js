@@ -23,6 +23,7 @@ app.use(cors())
 const cityRoutes = require('./routes/api/cities');
 const itineraryRoutes = require('./routes/api/itineraries');
 const userRoutes = require('./routes/api/users');
+const commentRoutes = require('./routes/api/comments');
 
 // const keys = {
 //     mongoURI: `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_NAME}-ikrcd.mongodb.net/myTravellingApp?retryWrites=true`,
@@ -33,17 +34,19 @@ mongoose.connect(db, {useNewUrlParser: true, useCreateIndex: true})
     .then(() => console.log('connected!'))
     .catch(err => console.log(err));
 
+
+//passport middleware
+app.use(passport.initialize());
+
+//passport configuration
+require('./config/passport')(passport);
+
 //using the routes for a specific api
 app.use('/api/cities', cityRoutes);
 app.use('/api/itineraries', itineraryRoutes);
-
-//passport middleware
-// app.use(passport.initialize());
-
-//passport configuration
-// require('./config/passport')(passport);
-
 app.use('/api/users', userRoutes);
+app.use('/api/comments', commentRoutes);
+
 
 
 
