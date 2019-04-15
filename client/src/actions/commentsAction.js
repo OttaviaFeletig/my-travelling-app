@@ -1,40 +1,23 @@
+import axios from "axios";
+
 //creating actions
 
-export const FETCH_COMMENTS_SUCCESS = 'FETCH_COMMENTS_SUCCESS';
-export const FETCH_COMMENTS_FAILURE = 'FETCH_COMMENTS_FAILURE';
+export const GET_COMMENTS_ITINERARY = 'GET_COMMENTS_ITINERARY';
+export const ADD_COMMENT = 'ADD_COMMENT'
+
+
 
 //defining what the actions will contain
 
-export const fetchCommentsSuccess = (items) => {
-  return {
-        type: FETCH_COMMENTS_SUCCESS,
-        payload: { items }
-  }
-};
-
-export const fetchCommentsFailure = (error) => {
-    return {
-        type: FETCH_COMMENTS_FAILURE,
-        payload: { error }
-    }
-};
-
-//fetching cities and dispatching the actions to the reducer
-export function fetchComments() {
-    return dispatch => {
-        fetch('http://localhost:5000/api/comments/')
-            .then(response => {
-                if(!response.ok){
-                    throw Error(response.statusText)
-                }
-                return response;
-            })
-            .then(response => response.json())
-            .then(data => {
-                dispatch(fetchCommentsSuccess(data))
-            })
-            .catch(error => 
-                dispatch(fetchCommentsFailure(error))
-            )
-    }
+export const getCommentsItinerary = (itineraryId) => dispatch => {
+    axios.get(`http://localhost:5000/api/comments/itineraries/${itineraryId}`)
+        .then(res => {
+            if(res.data.length !== 0){
+                dispatch({
+                    type: GET_COMMENTS_ITINERARY,
+                    payload: res
+                })
+            }
+        })
+        .catch(err => console.log(err))
 }

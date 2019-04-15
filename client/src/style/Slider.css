@@ -9,9 +9,11 @@
 }
 .slider a.nextButton {
     right: 0px;
+    z-index: 0;
 }
 .slider a.previousButton {
     left: 0px;
+    z-index: 0;
 }
 polygon{
     fill: white;

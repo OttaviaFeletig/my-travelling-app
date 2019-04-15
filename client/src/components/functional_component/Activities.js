@@ -1,18 +1,17 @@
 import React, { Component } from 'react'
 
-import Slider from 'react-animated-slider'
+import Slider from 'react-animated-slider';
+import Comments from './Comments';
 
 import 'react-animated-slider/build/horizontal.css'
 import '../../style/Slider.css'
 
 export default class Activities extends Component {
   render() {
+      const {itineraryId} = this.props;
       const { activities } = this.props
-      const names = this.props.activities.map(activity => activity.name)
-      const images = this.props.activities.map(activity => activity.pic)
-      console.log(names)
-      console.log(images)
-      console.log(activities)
+      // const names = this.props.activities.map(activity => activity.name)
+      // const images = this.props.activities.map(activity => activity.pic)
     return (
       <div style={activitiesContainerStyle}>
         <div style={sliderContainerStyle}>
@@ -33,12 +32,7 @@ export default class Activities extends Component {
         
         </div>
         
-        <div style={commentsContainerStyle}>
-            <div style={commentStyle}>
-              <p>blablablwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwa</p>
-            </div>
-          
-        </div>
+        <Comments itineraryId={itineraryId}/>
 
       </div>
     )
@@ -48,25 +42,6 @@ export default class Activities extends Component {
 const activitiesContainerStyle = {
   display: 'flex',
   flexDirection: 'column'
-}
-
-const commentsContainerStyle = {
-  display: 'flex',
-  alignSelf: 'center',
-  justifyContent: 'center',
-  background:' #32607F',
-  width: '90%',
-  borderRadius: '0px 0px 10px 10px'
-}
-
-const commentStyle = {
-  background: '#D3D3D3',
-  width: '80%',
-  height: '100%',
-  borderRadius: '10px 10px 10px 10px',
-  marginBottom: '20px',
-  padding: '5px 5px 5px 5px',
-  wordBreak: 'break-all'
 }
 
 const sliderContainerStyle = {

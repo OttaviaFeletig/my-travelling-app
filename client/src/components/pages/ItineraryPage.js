@@ -6,13 +6,13 @@ import { fetchItineraries } from '../../actions/itineariesAction';
 import Itinerary from '../functional_component/Itinerary';
 
 class ItineraryPage extends Component {
+  
   componentDidMount() {
     this.props.dispatch(fetchItineraries(this.props.match.params.id))
   } 
 
   render() {
     const { itineraries } = this.props.itineraries
-    // console.log(itineraries.length)
     if(itineraries.length === 0){
       return(
         <div style={noItineraryesStyle}>

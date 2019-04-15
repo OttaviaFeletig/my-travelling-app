@@ -6,18 +6,14 @@ const commentsSchema = new mongoose.Schema({
         required: true,
         ref: 'users'
     },
-    // username: {
-    //     type: String,
-    //     required: true
-    // },
-    // email: {
-    //     type: String,
-    //     required: true
-    // },
-    // avatarPicture: {
-    //     type: String,
-    //     required: true
-    // },
+    username: {
+        type: String,
+        required: true
+    },
+    avatarPicture: {
+        type: String,
+        required: true
+    },
     date: {
         type: Date,
         default: Date.now

@@ -12,8 +12,7 @@ export default class Itinerary extends Component {
   }
 
   render() {
-      
-    const { title, profilePic, duration, price, rating, activities } = this.props.itinerary
+    const { _id, title, profilePic, duration, price, rating, activities } = this.props.itinerary
     return (
       <div>
         <div style={itinerayStyle}>
@@ -23,7 +22,7 @@ export default class Itinerary extends Component {
               <h2 style={titleStyle}>{title}</h2>
               <div style={detailInfoStyle}>Duration: {duration} hours | Price: {price} € | Rating: {rating}</div>
           </div>
-          {!this.state.hideActivitiy && <Activities style={itinerayStyle} activities={activities} />}
+          {!this.state.hideActivitiy && <Activities style={itinerayStyle} activities={activities} itineraryId={_id} />}
         </div>
       </div>
     )  
