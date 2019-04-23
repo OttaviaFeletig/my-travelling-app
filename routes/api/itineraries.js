@@ -17,10 +17,10 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
     let cityRequested = req.params.id
-    console.log(cityRequested)
+    // console.log(cityRequested)
     itineraryModel.find({'city' : cityRequested}, (err, itineraryList) =>{
         if (err) throw err;
-        console.log(itineraryList)
+        // console.log(itineraryList)
         res.send(itineraryList)
     })
 });

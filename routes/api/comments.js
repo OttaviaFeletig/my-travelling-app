@@ -8,25 +8,35 @@ const isEmpty = require('is-empty');
 const commentsModel = require('../../models/comment');
 const userModel = require('../../models/user');
 
+router.get('/', (req, res) => {
+    commentsModel.find({})
+        .sort({date: -1})
+        .then(files => {
+            res.json(files)
+        })
+        .catch(err => console.log(err));
+});
 
+router.get('/itineraries/:id', (req, res) => {
+    let currentItineary = req.params.id;
+    commentsModel.find({'itineraryId': currentItineary})
+        .sort({date: -1})
+        .then(itineraryComments => res.json(itineraryComments))
+        .catch(err => console.log(err))
+});
 
 router.post('/', passport.authenticate("jwt", { session: false }), (req, res) => {
-    // console.log(req);
     userModel.findById(req.user.id, (err, user) => {
         if(err) throw new Error(err);
     })
 
-    console.log(req);
-    console.log(req.user);
     const newComment = new commentsModel({
         user: req.user.id,
-        username: req.user.username,
-        avatarPicture: req.user.avatarPicture,
+        username: req.body.username,
+        avatarPicture: req.body.avatarPicture,
         message: req.body.message,
         itineraryId: req.body.itineraryId
     })
-
-    console.log(newComment)
 
     newComment
         .save()
@@ -34,23 +44,5 @@ router.post('/', passport.authenticate("jwt", { session: false }), (req, res) =>
         .catch(err => console.log(err));
 })
 
-router.get('/', (req, res) => {
-    commentsModel.find({})
-        .then(files => {
-            res.send(files)
-        })
-        .catch(err => console.log(err));
-});
-
-
-router.get('/itineraries/:id', (req, res) => {
-    let currentItineary = req.params.id;
-    console.log(currentItineary)
-    commentsModel.find({'itineraryId': currentItineary}, (err, itineraryList) => {
-        if (err) throw err;
-        console.log(itineraryList);
-        res.send(itineraryList);
-    });
-});
 module.exports = router
 

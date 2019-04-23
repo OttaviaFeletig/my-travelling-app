@@ -5,9 +5,9 @@ import Button from 'react-bootstrap/Button';
 import isEmpty from 'is-empty';
 
 import PropTypes from 'prop-types';
-import axios from 'axios';
+
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+
 
 import {registerUser} from '../../actions/usersAction';
 

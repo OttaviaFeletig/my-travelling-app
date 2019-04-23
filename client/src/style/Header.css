@@ -22,6 +22,8 @@
     margin-bottom: 10px;
     color: white;
     transition: color 0.2s;
+    background-color: transparent;
+    border: none;
   }
   .bm-item:hover {
     color: #8f8f8f;

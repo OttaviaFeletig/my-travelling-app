@@ -24,7 +24,7 @@ class Header extends Component {
     const { user } = this.props
     
     const { avatarPicture } = user.user;
-    
+    const { history } = this.props
     return(
       <div>
         <div className="header">
@@ -40,7 +40,7 @@ class Header extends Component {
             {goBack}
           </div>
         </div>
-        <SideBar />
+        <SideBar history={history} />
       </div>
     )
   } 

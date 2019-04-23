@@ -5,22 +5,33 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { logOut } from '../../actions/usersAction';
+
 class SideBar extends Component {
+
+  logOutHandler = () => {
+    this.props.logOut();
+    this.props.history.push('/');
+  }
 
   render() {
     const {isAuthenticated} = this.props.user;
-    console.log(this.props.user)
     return (
       <Menu>
-        <Link className='menuItem' to='/'>Home</Link>
+        <Link className='bm-item' to='/'>Home</Link>
         <div style={lineStyle}></div>
-        <Link className='menuItem' to='/cities'>Cities</Link>
+        <Link className='bm-item' to='/cities'>Cities</Link>
         <div style={lineStyle}></div>
         {
-          isAuthenticated ?
-          <Link className='menuItem' to='/myAccount'>My account</Link>
+          isAuthenticated ? (
+            <React.Fragment>
+              <Link className='bm-item' to='/myAccount'>My account</Link> 
+              <div style={lineStyle}></div>
+              <button className='bm-item' onClick={this.logOutHandler}>LogOut</button>
+            </React.Fragment>
+          )
           :
-          <Link className='menuItem' to='/logIn'>LogIn</Link>
+          <Link className='bm-item' to='/logIn'>LogIn</Link>
         }
         <div style={lineStyle}></div>
       </Menu>
@@ -45,4 +56,4 @@ SideBar.propTypes = {
   user: PropTypes.object.isRequired
 };
 
-export default connect(mapStateProps)(SideBar);
+export default connect((mapStateProps), {logOut})(SideBar);

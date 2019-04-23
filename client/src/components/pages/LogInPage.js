@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import axios from 'axios';
 import isEmpty from 'is-empty';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logInUser } from '../../actions/usersAction';
 
-import {withRouter} from 'react-router-dom';
+// import {withRouter} from 'react-router-dom';
 
 class LogInPage extends Component {
 
@@ -90,8 +89,10 @@ const mapStateProps = (state) => {
     loading: state.loading
   }
 }
+
 LogInPage.propTypes = {
   user: PropTypes.object.isRequired,
   logInUser: PropTypes.func.isRequired
 }
+
 export default connect(mapStateProps, {logInUser})(LogInPage);  

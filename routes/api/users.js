@@ -72,7 +72,7 @@ router.post('/login', (req, res) => {
                     payload,
                     keys.secretOrKey,
                     {
-                        expiresIn: 3600 
+                        expiresIn: 2592000 
                     },
                     (err, token) => {
                         res.json({
@@ -98,7 +98,6 @@ router.get(
     (req, res) => {
       userModel.findOne({ _id: req.user.id })
         .then(response => {
-            console.log('user get route response: ' + response)
           // remove password before sending back
           const userDetails = Object.assign({}, response._doc);
           delete userDetails.password;

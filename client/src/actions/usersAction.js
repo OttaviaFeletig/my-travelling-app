@@ -47,7 +47,7 @@ export const logInUser = userData => {
             //send token to utils authorization (axios header param)
             setAuthToken(token);
 
-            //decode tolen to get user data
+            //decode token to get user data
             const decoded = jwt_decode(token);
 
             //set current user
@@ -61,6 +61,24 @@ export const logInUser = userData => {
         )
     }
 }
+
+//log out
+
+export const logOut = () => dispatch => {
+
+    //remove token from local storage
+    localStorage.removeItem('token');
+
+    //set authorization to false
+    setAuthToken(false);
+
+    //send empty current user
+    dispatch(setCurrentUser({}))
+
+}
+
+
+
 //set logged in user
 export const setCurrentUser = decoded => {
     return {

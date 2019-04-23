@@ -14,9 +14,36 @@ import MyAccountPage from './components/pages/MyAccountPage';
 import './App.css';
 import SignUpConfirmationPage from './components/pages/SignUpConfirmationPage';
 
+import { connect } from "react-redux";
+import jwt_decode from "jwt-decode";
+import PropTypes from "prop-types";
+import setAuthToken from "./utils/setAuthToken";
+import { setCurrentUser, logOut } from "./actions/usersAction";
 
 
 class App extends Component {
+
+  componentWillMount(){
+    this.checkUserToken();
+  }
+
+  checkUserToken = () => {
+    const {token} = localStorage;
+
+    if(token){
+      setAuthToken(token);
+      const decoded = jwt_decode(token);
+      const currentTime = Date.now() / 1000;
+
+      if(decoded.exp > currentTime){
+        this.props.setCurrentUser(decoded)
+      }else {
+        this.props.logOut()
+      }
+    }
+  }
+
+
   
   render() {
     return (
@@ -43,4 +70,13 @@ class App extends Component {
   }
 }
 
-export default App;
+
+App.propTypes = {
+  setCurrentUser: PropTypes.func.isRequired
+};
+
+export default connect(
+  null, 
+  {setCurrentUser, logOut}
+)(App);
+
