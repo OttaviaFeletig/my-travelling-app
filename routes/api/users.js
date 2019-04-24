@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const userModel = require('../../models/user');
+const itineraryModel = require('../../models/itinerary');
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const passport = require('passport');
+
 
 
 router.post('/register', (req, res) => {
@@ -105,6 +107,48 @@ router.get(
           res.json(userDetails);
         })
         .catch(err => res.status(404).json({ error: "User does not exist!" }));
+    }
+);
+
+router.post('/addToFavorite',
+    passport.authenticate('jwt', { session: false }),
+    (req,res) => {
+        userModel.findOne({ _id: req.user.id })
+            .then(user => {
+                if(user.favoriteItineraries.itineraryId.includes(req.body.id)){
+                    res
+                        .status(400)
+                        .json({ error: "User already liked this itinerary!" });
+                }
+
+                itineraryModel.findOne({ _id: req.body.id })
+                    .then(itinerary => {
+                        user.favoriteItineraries.push({
+                            itineraryId: req.body.id,
+                            name: itinerary.name,
+                            cityId: itinerary.city
+                        });
+
+                        user
+                            .save()
+                            .then(res => res.json(user.favoriteItineraries))
+                            .catch(err => {
+                                err
+                                    .status(500)
+                                    .json({error: 'The itinerary could not be saved'})
+                            })
+                    })
+                    .catch(err => {
+                        err
+                            .status(404)
+                            .json({error: 'Cannot find the itinerary with this id!'})
+                    })
+            })
+            .catch(err => {
+                err
+                    .status(404)
+                    .json({error: 'User not found'})
+            })
     }
 );
 
