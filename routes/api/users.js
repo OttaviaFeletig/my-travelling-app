@@ -53,41 +53,42 @@ router.post('/login', (req, res) => {
 
     //find user by email
 
-    userModel.findOne({email}).then(user => {
+    userModel.findOne({email})
+        .then(user => {
         //check if user exists
-        if(!user) {
-            return res.status(400).json({emailnotfound: 'Email not found'});
-        }
-
-        //check password
-        bcrypt.compare(password, user.password).then(isMatch => {
-            if(isMatch){
-                //create JWT payload
-                const payload = {
-                    id: user.id,
-                    username: user.username,
-                    avatarPicture: user.avatarPicture
-                };
-
-                //sign token
-                jwt.sign(
-                    payload,
-                    keys.secretOrKey,
-                    {
-                        expiresIn: 2592000 
-                    },
-                    (err, token) => {
-                        res.json({
-                            success: true,
-                            token: 'bearer ' + token,
-                        });
-                    }
-                );
-            } else {
-                return res 
-                    .status(400)
-                    .json({ passwordincorrect: 'Password incorrect' })
+            if(!user) {
+                return res.status(400).json({emailnotfound: 'Email not found'});
             }
+
+            //check password
+            bcrypt.compare(password, user.password).then(isMatch => {
+                if(isMatch){
+                    //create JWT payload
+                    const payload = {
+                        id: user.id,
+                        username: user.username,
+                        avatarPicture: user.avatarPicture
+                    };
+
+                    //sign token
+                    jwt.sign(
+                        payload,
+                        keys.secretOrKey,
+                        {
+                            expiresIn: 2592000 
+                        },
+                        (err, token) => {
+                            res.json({
+                                success: true,
+                                token: 'bearer ' + token,
+                            });
+                        }
+                    );
+                } else {
+                    return res 
+                        .status(400)
+                        .json({ passwordincorrect: 'Password incorrect' })
+                }
         })
         .catch(err => console.log(err));
     });
@@ -98,54 +99,110 @@ router.get(
     "/",
     passport.authenticate("jwt", { session: false }),
     (req, res) => {
-      userModel.findOne({ _id: req.user.id })
-        .then(response => {
-          // remove password before sending back
-          const userDetails = Object.assign({}, response._doc);
-          delete userDetails.password;
-  
-          res.json(userDetails);
-        })
-        .catch(err => res.status(404).json({ error: "User does not exist!" }));
+        userModel.findOne({ _id: req.user.id })
+            .then(response => {
+            // remove password before sending back
+                const userDetails = Object.assign({}, response._doc);
+                delete userDetails.password;
+        
+                res.json(userDetails);
+            })
+            .catch(err => res.status(404).json({ error: "User does not exist!" }));
     }
 );
 
 router.post('/addToFavorite',
     passport.authenticate('jwt', { session: false }),
-    (req,res) => {
+    (req, res) => {
         userModel.findOne({ _id: req.user.id })
             .then(user => {
-                if(user.favoriteItineraries.itineraryId.includes(req.body.id)){
+                
+                let currentFavItineraries = user.favoriteItineraries.filter(oneFavItin => oneFavItin.itineraryId === req.body.itineraryId)
+                
+                if(currentFavItineraries.length !== 0){
                     res
                         .status(400)
                         .json({ error: "User already liked this itinerary!" });
                 }
 
-                itineraryModel.findOne({ _id: req.body.id })
+                itineraryModel.findOne({ _id: req.body.itineraryId })
                     .then(itinerary => {
+                        // console.log(itinerary)
                         user.favoriteItineraries.push({
-                            itineraryId: req.body.id,
-                            name: itinerary.name,
+                            itineraryId: req.body.itineraryId,
+                            name: itinerary.title,
                             cityId: itinerary.city
                         });
 
                         user
                             .save()
-                            .then(res => res.json(user.favoriteItineraries))
+                            .then(userFavItin => res.json(user.favoriteItineraries))
                             .catch(err => {
-                                err
+                                res
                                     .status(500)
                                     .json({error: 'The itinerary could not be saved'})
                             })
                     })
                     .catch(err => {
-                        err
+                        res
                             .status(404)
                             .json({error: 'Cannot find the itinerary with this id!'})
                     })
             })
             .catch(err => {
-                err
+                res
+                    .status(404)
+                    .json({error: 'User not found'})
+            })
+    }
+);
+
+router.post('/removeFromFavorite',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+        userModel.findOne({ _id: req.user.id })
+            .then(user => {
+                
+                let currentFavItineraries = user.favoriteItineraries.filter(oneFavItin => oneFavItin.itineraryId === req.body.itineraryId)
+                console.log('current itin')
+                console.log(currentFavItineraries)
+                if(currentFavItineraries.length === 0){
+                    res
+                        .status(400)
+                        .json({ error: "User did not like this itinerary!" });
+                }
+
+                itineraryModel.findOne({ _id: req.body.itineraryId })
+                    .then(itinerary => {
+                        // console.log(itinerary)
+                        console.log('in itinerary model')
+                        const index = user.favoriteItineraries.map(oneFavItin => oneFavItin.itineraryId).indexOf(req.body.itineraryId);
+                        console.log(index)
+                        // user.favoriteItineraries.shift(favoriteItineraries.indexOf(currentFavItineraries), 1);
+
+                        // user.favoriteItineraries.push({
+                        //     itineraryId: req.body.itineraryId,
+                        //     name: itinerary.title,
+                        //     cityId: itinerary.city
+                        // });
+
+                        user
+                            .save()
+                            .then(userFavItin => res.json(user.favoriteItineraries))
+                            .catch(err => {
+                                res
+                                    .status(500)
+                                    .json({error: 'The itinerary could not be saved'})
+                            })
+                    })
+                    .catch(err => {
+                        res
+                            .status(404)
+                            .json({error: 'Cannot find the itinerary with this id!'})
+                    })
+            })
+            .catch(err => {
+                res
                     .status(404)
                     .json({error: 'User not found'})
             })
