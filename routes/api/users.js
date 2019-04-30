@@ -200,5 +200,23 @@ router.post('/removeFromFavorite',
     }
 );
 
+router.get('/favorite',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+        userModel.findOne({_id: req.user.id})
+            .then(user => {
+                res.json(user.favoriteItineraries)
+                // user.favoriteItineraries.find()
+                // .then(items => res.json(items))
+                // .catch(err => res.status(404).json({error: 'We could not find your favorite itineraries'}))
+            })
+            .catch(err => {
+                res
+                    .status(404)
+                    .json({error: 'User not found'})
+            })
+    }  
+);
+
 
 module.exports = router
