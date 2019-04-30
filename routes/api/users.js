@@ -123,9 +123,8 @@ router.post('/addToFavorite',
                     res
                         .status(400)
                         .json({ error: "User already liked this itinerary!" });
-                }
-
-                itineraryModel.findOne({ _id: req.body.itineraryId })
+                } else {
+                    itineraryModel.findOne({ _id: req.body.itineraryId })
                     .then(itinerary => {
                         // console.log(itinerary)
                         user.favoriteItineraries.push({
@@ -148,6 +147,7 @@ router.post('/addToFavorite',
                             .status(404)
                             .json({error: 'Cannot find the itinerary with this id!'})
                     })
+                }
             })
             .catch(err => {
                 res
@@ -164,8 +164,7 @@ router.post('/removeFromFavorite',
             .then(user => {
                 
                 let currentFavItineraries = user.favoriteItineraries.filter(oneFavItin => oneFavItin.itineraryId === req.body.itineraryId)
-                console.log('current itin')
-                console.log(currentFavItineraries)
+
                 if(currentFavItineraries.length === 0){
                     res
                         .status(400)
@@ -174,17 +173,9 @@ router.post('/removeFromFavorite',
 
                 itineraryModel.findOne({ _id: req.body.itineraryId })
                     .then(itinerary => {
-                        // console.log(itinerary)
-                        console.log('in itinerary model')
-                        const index = user.favoriteItineraries.map(oneFavItin => oneFavItin.itineraryId).indexOf(req.body.itineraryId);
-                        console.log(index)
-                        // user.favoriteItineraries.shift(favoriteItineraries.indexOf(currentFavItineraries), 1);
-
-                        // user.favoriteItineraries.push({
-                        //     itineraryId: req.body.itineraryId,
-                        //     name: itinerary.title,
-                        //     cityId: itinerary.city
-                        // });
+                        const indexItinToRemove = user.favoriteItineraries.map(oneFavItin => oneFavItin.itineraryId).indexOf(req.body.itineraryId);
+                        console.log(indexItinToRemove)
+                        user.favoriteItineraries.splice(indexItinToRemove, 1);
 
                         user
                             .save()
@@ -192,7 +183,7 @@ router.post('/removeFromFavorite',
                             .catch(err => {
                                 res
                                     .status(500)
-                                    .json({error: 'The itinerary could not be saved'})
+                                    .json({error: 'There was a saving error'})
                             })
                     })
                     .catch(err => {
