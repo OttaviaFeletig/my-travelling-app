@@ -38,8 +38,6 @@ class LogInPage extends Component {
     };
 
     this.props.logInUser(user)
-    console.log(this.props)
-    // this.logInUser();
   }
 
   componentDidUpdate(){
@@ -82,17 +80,23 @@ const logInPageStyle = {
   margin: '0 20px 0 20px'
 }
 
-const mapStateProps = (state) => {
-  return {
-    isAuthenticated: state.isAuthenticated,
-    user: state.user,
-    loading: state.loading
-  }
-}
-
 LogInPage.propTypes = {
   user: PropTypes.object.isRequired,
   logInUser: PropTypes.func.isRequired
 }
 
-export default connect(mapStateProps, {logInUser})(LogInPage);  
+const mapStateProps = (state) => {
+  return {
+    isAuthenticated: state.user.isAuthenticated,
+    user: state.user,
+    loading: state.user.loading
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    logInUser: user => dispatch(logInUser(user)),
+  }
+}
+
+export default connect(mapStateProps, mapDispatchToProps)(LogInPage);  

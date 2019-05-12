@@ -6,6 +6,7 @@ import jwt_decode from 'jwt-decode';
 export const GET_ERRORS = 'GET_ERRORS';
 export const USER_LOADING = 'USER_LOADING';
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+export const ADD_FAVORITE_ITINERARY = 'ADD_FAVORITE_ITINERARY';
 
 
 
@@ -49,7 +50,7 @@ export const logInUser = userData => {
 
             //decode token to get user data
             const decoded = jwt_decode(token);
-
+            console.log(decoded)
             //set current user
             dispatch(setCurrentUser(decoded))
         })
@@ -92,5 +93,18 @@ export const setUserLoading = () => {
     return {
         type: USER_LOADING
     }
+}
+
+//add fav itinerary
+
+export const addFavItin = (favItinerary) => dispatch => {
+    axios.post('http://localhost:5000/api/users/addToFavorite', favItinerary)
+        .then(res => {
+            dispatch({
+                type: ADD_FAVORITE_ITINERARY,
+                payload: res.data
+            })   
+        })
+        .catch(err => console.log(err))
 }
 

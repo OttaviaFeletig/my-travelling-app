@@ -3,12 +3,50 @@ import PropTypes from 'prop-types';
 
 import Activities from './Activities';
 
-export default class Itinerary extends Component {
+import { FaHeart } from 'react-icons/fa';
+
+import { connect } from 'react-redux';
+import {addFavItin} from '../../actions/usersAction';
+
+class Itinerary extends Component {
   state = {
     hideActivitiy: true,
+    favItinerary: false
   }
   changeVisibility = () => {
     this.setState({hideActivitiy : !this.state.hideActivitiy})
+  }
+
+  updateState = (event) => {
+    event.preventDefault()
+    this.setState({favItinerary : !this.state.favItinerary}, () => this.addFavItinerary())    
+  }
+
+  addFavItinerary = () => {
+    console.log(this.state.favItinerary)
+    const {user} = this.props;
+    console.log(user)
+
+    if(user.isAuthenticated === true){
+      const {_id} =  this.props.itinerary
+      const {title} = this.props.itinerary
+      const {city} = this.props.itinerary
+      console.log(this.props.itinerary)
+      const favItinerary = {
+        itineraryId: _id,
+        name: title,
+        cityId: city
+      }
+      console.log(favItinerary)
+      if(this.state.favItinerary === true){
+        this.props.addFavItin(favItinerary)
+      }
+    }else {
+      alert('You have to logIn to like or unlike itineraries!')
+    }
+
+
+    
   }
 
   render() {
@@ -20,7 +58,10 @@ export default class Itinerary extends Component {
           
           <div style={Object.assign({}, infoStyle.closeInfoStyle, !this.state.hideActivitiy && infoStyle.openInfoStyle)}>
               <h2 style={titleStyle}>{title}</h2>
-              <div style={detailInfoStyle}>Duration: {duration} hours | Price: {price} € | Rating: {rating}</div>
+              <div style={detailInfoStyle}>
+                Duration: {duration} hours | Price: {price} € | Rating: {rating}
+                  <FaHeart onClick={this.updateState} size={32} style={heartStyle} />
+              </div>
           </div>
           {!this.state.hideActivitiy && <Activities style={itinerayStyle} activities={activities} itineraryId={_id} />}
         </div>
@@ -76,9 +117,32 @@ const titleStyle = {
 }
 
 const detailInfoStyle = {
-    textAlign: 'center'
+    textAlign: 'center',  
 }
 
-Itinerary.propTypes = {
-    itinerary: PropTypes.object.isRequired
+const heartStyle = {
+    marginLeft: '20px',
+    // color: 'red'
 }
+
+
+Itinerary.propTypes = {
+    itinerary: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired
+}
+
+const mapStateProps = (state) => {
+  console.log(state)
+  return {
+      // itineraries: state.itineraries,
+      user: state.user
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addFavItin: favItinerary => dispatch(addFavItin(favItinerary)),
+  }
+}
+
+export default connect(mapStateProps, mapDispatchToProps)(Itinerary)

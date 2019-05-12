@@ -44,7 +44,7 @@ class SignUpPage extends Component {
         }
 
         if(avatarPicture === ''){
-            avatarPicture = 'https://png.pngtree.com/element_origin_min_pic/16/11/14/910617dff00c65cc7c1419fcf0b9f0c1.jpg';
+            avatarPicture = 'https://cdn.pixabay.com/photo/2016/03/31/19/58/avatar-1295429_960_720.png';
         }
 
         const newUser = {

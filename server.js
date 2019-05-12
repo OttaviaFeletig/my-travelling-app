@@ -25,9 +25,9 @@ const itineraryRoutes = require('./routes/api/itineraries');
 const userRoutes = require('./routes/api/users');
 const commentRoutes = require('./routes/api/comments');
 
-// const keys = {
+// const db = {
 //     mongoURI: `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_NAME}-ikrcd.mongodb.net/myTravellingApp?retryWrites=true`,
-//     secretOrKey: "secret"    
+    
 // };
 
 mongoose.connect(db, {useNewUrlParser: true, useCreateIndex: true})

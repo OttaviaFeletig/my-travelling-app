@@ -24,6 +24,7 @@ import { setCurrentUser, logOut } from "./actions/usersAction";
 class App extends Component {
 
   componentWillMount(){
+    console.log(this.props)
     this.checkUserToken();
   }
 
@@ -75,8 +76,15 @@ App.propTypes = {
   setCurrentUser: PropTypes.func.isRequired
 };
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+      setCurrentUser: (decoded) => dispatch(setCurrentUser(decoded)),
+      logOut: () => dispatch(logOut())
+  }
+}
+
 export default connect(
   null, 
-  {setCurrentUser, logOut}
+  mapDispatchToProps
 )(App);
 

@@ -18,6 +18,8 @@ const store = createStore(rootReducer, composeWithDevTools(
 ));
 
 //provider used to provide our application with the store
-ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
+ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'), );
 
 serviceWorker.unregister();
+
+

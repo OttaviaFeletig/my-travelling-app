@@ -1,7 +1,8 @@
 import {
     GET_ERRORS,
     USER_LOADING,
-    SET_CURRENT_USER
+    SET_CURRENT_USER,
+    ADD_FAVORITE_ITINERARY
 } from '../actions/usersAction';
 
 const isEmpty = require('is-empty');
@@ -25,8 +26,14 @@ const usersReducer = (state = initState, action) => {
             return {
                 ...state,
                 isAuthenticated: !isEmpty(action.payload),
+                // isAuthenticated: true,
                 user: action.payload
             };
+        case ADD_FAVORITE_ITINERARY:
+            return {
+                ...state,
+                user: action.payload
+            }
         default:
             return state;
     }

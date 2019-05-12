@@ -44,7 +44,8 @@ const mapStateProps = (state) => {
   return {
     itineraries: state.itineraries,
     loading: state.loading,
-    error: state.error
+    error: state.error,
+    isAuthenticated: state.user.isAuthenticated,
   }
 }
 
