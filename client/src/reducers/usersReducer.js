@@ -3,7 +3,8 @@ import {
   USER_LOADING,
   SET_CURRENT_USER,
   ADD_FAVORITE_ITINERARY,
-  GET_FAVORITE_ITINERARY
+  GET_FAVORITE_ITINERARY,
+  REMOVE_FAVORITE_ITINERARY
 } from "../actions/usersAction";
 
 const isEmpty = require("is-empty");
@@ -37,6 +38,11 @@ const usersReducer = (state = initState, action) => {
         favoriteItineraries: action.payload
       };
     case GET_FAVORITE_ITINERARY:
+      return {
+        ...state,
+        favoriteItineraries: action.payload
+      };
+    case REMOVE_FAVORITE_ITINERARY:
       return {
         ...state,
         favoriteItineraries: action.payload

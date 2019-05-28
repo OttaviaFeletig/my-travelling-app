@@ -1,18 +1,16 @@
-import React, { Component } from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
+import Header from "./components/layout/Header";
+import Home from "./components/pages/Home";
+import CityPage from "./components/pages/CityPage";
+import ItineraryPage from "./components/pages/ItineraryPage";
+import LogInPage from "./components/pages/LogInPage";
+import SignUpPage from "./components/pages/SignUpPage";
+import MyAccountPage from "./components/pages/MyAccountPage";
 
-
-import Header from './components/layout/Header';
-import Home from './components/pages/Home';
-import CityPage from './components/pages/CityPage';
-import ItineraryPage from './components/pages/ItineraryPage';
-import LogInPage from './components/pages/LogInPage'
-import SignUpPage from './components/pages/SignUpPage';
-import MyAccountPage from './components/pages/MyAccountPage';
-
-import './App.css';
-import SignUpConfirmationPage from './components/pages/SignUpConfirmationPage';
+import "./App.css";
+import SignUpConfirmationPage from "./components/pages/SignUpConfirmationPage";
 
 import { connect } from "react-redux";
 import jwt_decode from "jwt-decode";
@@ -20,32 +18,29 @@ import PropTypes from "prop-types";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logOut } from "./actions/usersAction";
 
-
 class App extends Component {
-
-  componentWillMount(){
-    console.log(this.props)
+  componentWillMount() {
+    console.log(this.props);
     this.checkUserToken();
   }
 
   checkUserToken = () => {
-    const {token} = localStorage;
+    const { token } = localStorage;
+    console.log(token);
 
-    if(token){
+    if (token) {
       setAuthToken(token);
       const decoded = jwt_decode(token);
       const currentTime = Date.now() / 1000;
 
-      if(decoded.exp > currentTime){
-        this.props.setCurrentUser(decoded)
-      }else {
-        this.props.logOut()
+      if (decoded.exp > currentTime) {
+        this.props.setCurrentUser(decoded);
+      } else {
+        this.props.logOut();
       }
     }
-  }
+  };
 
-
-  
   render() {
     return (
       <Router>
@@ -57,34 +52,35 @@ class App extends Component {
             crossOrigin="anonymous"
           />
           <Header />
-          <Route exact path='/' component={Home}></Route>
-          <Route exact path='/cities' component={CityPage}></Route>
-          <Route exact path='/itineraries/:id' component={ItineraryPage}></Route>
-          <Route exact path='/logIn' component={LogInPage}></Route>
-          <Route exact path='/signUp' component={SignUpPage}></Route>
-          <Route exact path='/signUpConfirmation' component={SignUpConfirmationPage}></Route>
-          <Route exact path='/myAccount' component={MyAccountPage}></Route>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/cities" component={CityPage} />
+          <Route exact path="/itineraries/:id" component={ItineraryPage} />
+          <Route exact path="/logIn" component={LogInPage} />
+          <Route exact path="/signUp" component={SignUpPage} />
+          <Route
+            exact
+            path="/signUpConfirmation"
+            component={SignUpConfirmationPage}
+          />
+          <Route exact path="/myAccount" component={MyAccountPage} />
         </div>
-     </Router>
-      
+      </Router>
     );
   }
 }
-
 
 App.propTypes = {
   setCurrentUser: PropTypes.func.isRequired
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-      setCurrentUser: (decoded) => dispatch(setCurrentUser(decoded)),
-      logOut: () => dispatch(logOut())
-  }
-}
+    setCurrentUser: decoded => dispatch(setCurrentUser(decoded)),
+    logOut: () => dispatch(logOut())
+  };
+};
 
 export default connect(
-  null, 
+  null,
   mapDispatchToProps
 )(App);
-

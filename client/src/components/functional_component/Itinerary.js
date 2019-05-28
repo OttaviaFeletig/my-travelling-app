@@ -6,42 +6,20 @@ import Activities from "./Activities";
 import { FaHeart } from "react-icons/fa";
 
 import { connect } from "react-redux";
-import { addFavItin, getFavItin } from "../../actions/usersAction";
+import { addFavItin, removeFromFav } from "../../actions/usersAction";
 
 class Itinerary extends Component {
   state = {
-    hideActivitiy: true,
-    // favItinerary: false,
-    heartColor: "white"
+    hideActivitiy: true
   };
-
-  componentDidMount() {
-    if (this.props.user.isAuthenticated) {
-      this.props.getFavItin();
-    }
-  }
 
   changeVisibility = () => {
     this.setState({ hideActivitiy: !this.state.hideActivitiy });
   };
 
-  colorHeart = () => {
-    console.log(this.props.favoriteItineraries);
-    console.log(this.props.itinerary);
-    const { favoriteItineraries } = this.props;
-    const { _id } = this.props.itinerary;
-    console.log(
-      favoriteItineraries.filter(oneInin => oneInin.itineraryId === _id).length
-    );
-    if (favoriteItineraries.map(oneInin => oneInin.itineraryId === _id)) {
-      console.log("yes");
-      this.setState({ heartColor: "red" });
-    }
-  };
-
   addFavItinerary = () => {
     const { user } = this.props;
-    const { favoriteItineraries } = this.props;
+    // const { favItineraries } = this.props;
     // console.log(favoriteItineraries);
 
     if (user.isAuthenticated === true) {
@@ -56,17 +34,29 @@ class Itinerary extends Component {
       };
       // console.log(likedItinerary);
 
-      if (
-        favoriteItineraries.filter(
-          oneFavItin => oneFavItin.itineraryId === likedItinerary.itineraryId
-        ).length > 0
-      ) {
-        alert("test");
-      } else {
-        this.props.addFavItin(likedItinerary);
-      }
+      // if (
+      //   favItineraries.filter(
+      //     oneFavItin => oneFavItin.itineraryId === likedItinerary.itineraryId
+      //   ).length > 0
+      // ) {
+      //   alert("test");
+      // } else {
+      this.props.addFavItin(likedItinerary);
+      // }
     } else {
       alert("You have to logIn to like or unlike itineraries!");
+    }
+  };
+
+  deleteFavItin = () => {
+    const { user } = this.props;
+    if (user.isAuthenticated === true) {
+      const { _id } = this.props.itinerary;
+      const choosenItin = {
+        itineraryId: _id
+      };
+      console.log(choosenItin);
+      this.props.removeFromFav(choosenItin);
     }
   };
 
@@ -81,15 +71,19 @@ class Itinerary extends Component {
       activities
     } = this.props.itinerary;
 
+    console.log(this.props.favItineraries);
     let heart;
 
-    const { favoriteItineraries } = this.props;
-    console.log(favoriteItineraries);
-    if (favoriteItineraries.map(oneInin => oneInin.itineraryId === _id)) {
-      console.log("yes");
+    const { favItineraries } = this.props;
+    console.log(favItineraries);
+    const favItin = favItineraries.filter(
+      oneItin => oneItin.itineraryId === _id
+    );
+    console.log(favItin);
+    if (favItin.length > 0) {
       heart = (
         <FaHeart
-          onClick={this.addFavItinerary}
+          onClick={this.deleteFavItin}
           size={32}
           style={{ color: "red" }}
         />
@@ -103,6 +97,27 @@ class Itinerary extends Component {
         />
       );
     }
+    // favItineraries.map(oneInin => {
+    //   if (oneInin.itineraryId === _id) {
+    //     console.log("yes");
+    //     heart = (
+    //       <FaHeart
+    //         // onClick={this.addFavItinerary}
+    //         size={32}
+    //         style={{ color: "red" }}
+    //       />
+    //     );
+    //   } else {
+    //     console.log("no");
+    //     heart = (
+    //       <FaHeart
+    //         onClick={this.addFavItinerary}
+    //         size={32}
+    //         style={{ color: "white" }}
+    //       />
+    //     );
+    //   }
+    // });
 
     return (
       <div>
@@ -201,22 +216,24 @@ const heartStyle = {
 
 Itinerary.propTypes = {
   itinerary: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  favItineraries: PropTypes.array.isRequired
 };
 
 const mapStateProps = state => {
   console.log(state);
   return {
     // itineraries: state.itineraries,
-    user: state.user,
-    favoriteItineraries: state.user.favoriteItineraries
+    user: state.user
+    // favoriteItineraries: state.user.favoriteItineraries
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     addFavItin: favItinerary => dispatch(addFavItin(favItinerary)),
-    getFavItin: () => dispatch(getFavItin())
+    removeFromFav: choosenItin => dispatch(removeFromFav(choosenItin))
+    // getFavItin: () => dispatch(getFavItin())
   };
 };
 
