@@ -88,6 +88,22 @@ export const setUserLoading = () => {
   };
 };
 
+export const googleAuth = token => {
+  return dispatch => {
+    console.log(token);
+    localStorage.setItem("token", token);
+
+    //send token to utils authorization (axios header param)
+    setAuthToken(token);
+
+    //decode token to get user data
+    const decoded = jwt_decode(token);
+    console.log(decoded);
+    //set current user
+    dispatch(setCurrentUser(decoded));
+  };
+};
+
 export const getFavItin = () => dispatch => {
   axios.get("http://localhost:5000/api/users/favorite").then(res => {
     dispatch({

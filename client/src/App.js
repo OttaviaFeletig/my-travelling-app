@@ -25,6 +25,7 @@ class App extends Component {
   }
 
   checkUserToken = () => {
+    console.log(localStorage);
     const { token } = localStorage;
     console.log(token);
 

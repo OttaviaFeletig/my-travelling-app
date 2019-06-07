@@ -1,16 +1,18 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
-export default class MyAccountPage extends Component {
+class MyAccountPage extends Component {
   render() {
     return (
       <div style={myAccountPageStyle}>
         <p>this is my account</p>
       </div>
-    )
+    );
   }
 }
 
 const myAccountPageStyle = {
-    paddingTop: '200px',
-    margin: '0 20px 0 20px'
-  }
+  paddingTop: "200px",
+  margin: "0 20px 0 20px"
+};
+
+export default MyAccountPage;

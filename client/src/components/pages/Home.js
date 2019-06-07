@@ -1,11 +1,13 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { googleAuth } from "../../actions/usersAction";
 
 // import Slider from 'react-animated-slider'
 // import 'react-animated-slider/build/horizontal.css'
-import '../../style/Home.css'
+import "../../style/Home.css";
 
-import arrow from '../../icons/arrow.png'
+import arrow from "../../icons/arrow.png";
 // import berlin from '../../cities_pic/berlin.jpg'
 // import copenhagen from '../../cities_pic/copenhagen.jpg'
 // import aalborg from '../../cities_pic/aalborg.jpg'
@@ -20,18 +22,21 @@ import arrow from '../../icons/arrow.png'
 // import parigi from '../../cities_pic/parigi.jpg'
 
 class Home extends Component {
-  render(){   
+  componentDidMount() {
+    const googleToken = this.props.location.search.split("=")[1];
+    console.log(googleToken);
+    this.props.googleAuth(googleToken);
+  }
+  render() {
     // const citiesPic = [[berlin, copenhagen, aalborg, torino], [barcellona, budapest, palermo, roma], [trieste, zurigo, londra, parigi]]
     // console.log(this.props)
-  return (
-    <div className='home'>
 
-      <Link style={linkStyle} to='/cities'>
-
-        <img style={arrowStyle} src={arrow} alt='arrow' />
-
-      </Link>
-      {/* <Slider autoplay={2000} style={sliderStyle}>
+    return (
+      <div className="home">
+        <Link style={linkStyle} to="/cities">
+          <img style={arrowStyle} src={arrow} alt="arrow" />
+        </Link>
+        {/* <Slider autoplay={2000} style={sliderStyle}>
         {
           citiesPic.map((pic, index) =>
           <div key={index}>
@@ -43,22 +48,22 @@ class Home extends Component {
           )
         }
       </Slider> */}
-    </div>
-    )
+      </div>
+    );
   }
 }
 
 const arrowStyle = {
-  height: '30%'
-}
+  height: "30%"
+};
 
 const linkStyle = {
-  height: '100vh',
-  display: 'flex',
-  alignContent: 'center',
-  justifyContent: 'center',
-  alignItems: 'center'
-}
+  height: "100vh",
+  display: "flex",
+  alignContent: "center",
+  justifyContent: "center",
+  alignItems: "center"
+};
 // const sliderStyle = {
 //   slider: 'slider',
 //   previousButton: 'previousButton #32607F',
@@ -80,4 +85,14 @@ const linkStyle = {
 //   border: 'solid #32607F 4px'
 // }
 
-export default Home
+const mapDispatchToProps = dispatch => {
+  return {
+    // logInUser: user => dispatch(logInUser(user))
+    googleAuth: googleToken => dispatch(googleAuth(googleToken))
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Home);
