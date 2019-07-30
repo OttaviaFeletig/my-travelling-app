@@ -4,7 +4,7 @@ const setAuthToken = token => {
   //   axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
   if (token) {
     // apply authorization token to every request if logged in
-    axios.defaults.headers.common["Authorization"] = token;
+    axios.defaults.headers.common["Authorization"] = "bearer " + token;
     console.log(axios.defaults.headers);
   } else {
     // delete auth header

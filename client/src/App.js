@@ -16,11 +16,14 @@ import { connect } from "react-redux";
 import jwt_decode from "jwt-decode";
 import PropTypes from "prop-types";
 import setAuthToken from "./utils/setAuthToken";
-import { setCurrentUser, logOut } from "./actions/usersAction";
+import { setCurrentUser, logOut, googleAuth } from "./actions/usersAction";
 
 class App extends Component {
   componentWillMount() {
     console.log(this.props);
+
+    // localStorage.removeItem("token");
+    // localStorage.removeItem("googleToken");
     this.checkUserToken();
   }
 
@@ -30,10 +33,11 @@ class App extends Component {
     console.log(token);
 
     if (token) {
+      // console.log("token");
       setAuthToken(token);
       const decoded = jwt_decode(token);
       const currentTime = Date.now() / 1000;
-
+      console.log(decoded);
       if (decoded.exp > currentTime) {
         this.props.setCurrentUser(decoded);
       } else {
@@ -76,6 +80,7 @@ App.propTypes = {
 
 const mapDispatchToProps = dispatch => {
   return {
+    // googleAuth: token => dispatch(googleAuth(token)),
     setCurrentUser: decoded => dispatch(setCurrentUser(decoded)),
     logOut: () => dispatch(logOut())
   };

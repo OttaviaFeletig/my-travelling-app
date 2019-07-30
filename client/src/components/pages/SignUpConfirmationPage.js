@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { googleAuth } from "../../actions/usersAction";
 import PropTypes from "prop-types";
 class SignUpConfirmationPage extends Component {
   render() {
@@ -32,8 +31,8 @@ const avatarStyle = {
 };
 
 SignUpConfirmationPage.propTypes = {
-  user: PropTypes.object.isRequired,
-  googleAuth: PropTypes.func.isRequired
+  user: PropTypes.object.isRequired
+  // googleAuth: PropTypes.func.isRequired
 };
 
 const mapStateProps = state => {
@@ -44,11 +43,4 @@ const mapStateProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {};
-};
-
-export default connect(
-  mapStateProps,
-  null
-)(SignUpConfirmationPage);
+export default connect(mapStateProps)(SignUpConfirmationPage);

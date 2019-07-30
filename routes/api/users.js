@@ -75,7 +75,7 @@ router.post("/login", (req, res) => {
             (err, token) => {
               res.json({
                 success: true,
-                token: "bearer " + token
+                token: token
               });
             }
           );
@@ -217,26 +217,36 @@ router.get(
   })
 );
 
-router.get("/google/redirect", passport.authenticate("google"), (req, res) => {
-  const user = req.user[0];
-  console.log(user);
-  const payload = {
-    id: user.id,
-    username: user.username,
-    avatarPicture: user.avatarPicture
-  };
+router.get(
+  "/google/redirect",
+  passport.authenticate("google", { session: false }),
 
-  //sign token
-  jwt.sign(
-    payload,
-    keys.secretOrKey,
-    {
-      expiresIn: 2592000
-    },
-    (err, token) => {
-      res.redirect("http://localhost:3000/?valid=" + token);
-    }
-  );
-});
+  (req, res) => {
+    const user = req.user[0];
+    console.log(user);
+    const payload = {
+      id: user.id,
+      username: user.username,
+      avatarPicture: user.avatarPicture
+    };
+    console.log(req.query.code);
+
+    // sign token
+    jwt.sign(
+      payload,
+      keys.secretOrKey,
+      {
+        expiresIn: 2592000
+      },
+      (err, token) => {
+        console.log("google jwt token", token);
+        console.log(err);
+
+        const resToken = "?code=" + token;
+        res.redirect("http://localhost:3000/" + resToken);
+      }
+    );
+  }
+);
 
 module.exports = router;

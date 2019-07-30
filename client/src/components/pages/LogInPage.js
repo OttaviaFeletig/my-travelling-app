@@ -40,7 +40,8 @@ class LogInPage extends Component {
   };
 
   // redirectGoogle = () => {
-  //   this.props.googleAuth();
+  //   // this.props.history.push("/");
+  //   // this.props.googleAuth();
   // };
 
   componentDidUpdate() {
@@ -88,7 +89,7 @@ class LogInPage extends Component {
           variant="primary"
           type="submit"
           href="http://localhost:5000/api/users/google"
-          // onClick={this.props.history.push("/signUpConfirmation")}
+          // onClick={this.redirectGoogle}
         >
           Google+
         </Button>

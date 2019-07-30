@@ -23,9 +23,19 @@ import arrow from "../../icons/arrow.png";
 
 class Home extends Component {
   componentDidMount() {
-    const googleToken = this.props.location.search.split("=")[1];
-    console.log(googleToken);
-    this.props.googleAuth(googleToken);
+    console.log(this.props.location);
+    const code = this.props.location.search.split("=")[1];
+    if (code) {
+      // const tokenArray = code.split("=");
+      // const token = tokenArray[0] + " " + tokenArray[1];
+      // if (token) {
+      this.props.googleAuth(code);
+      console.log(code);
+      // }
+    }
+
+    // console.log(googleToken);
+    // this.props.googleAuth();
   }
   render() {
     // const citiesPic = [[berlin, copenhagen, aalborg, torino], [barcellona, budapest, palermo, roma], [trieste, zurigo, londra, parigi]]
@@ -88,7 +98,7 @@ const linkStyle = {
 const mapDispatchToProps = dispatch => {
   return {
     // logInUser: user => dispatch(logInUser(user))
-    googleAuth: googleToken => dispatch(googleAuth(googleToken))
+    googleAuth: code => dispatch(googleAuth(code))
   };
 };
 

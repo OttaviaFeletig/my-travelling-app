@@ -88,18 +88,25 @@ export const setUserLoading = () => {
   };
 };
 
-export const googleAuth = token => {
+export const googleAuth = code => {
   return dispatch => {
-    console.log(token);
-    localStorage.setItem("token", token);
+    console.log(code);
+    // axios.get("api/users/google/redirect").then(res => {
+    //   console.log(res);
+    //   if (res) {
+    //     // this.props.history.push("/");
+    //   }
+    // });
+    // console.log(token);
 
-    //send token to utils authorization (axios header param)
-    setAuthToken(token);
-
-    //decode token to get user data
-    const decoded = jwt_decode(token);
+    localStorage.setItem("token", code);
+    console.log(localStorage);
+    // //send token to utils authorization (axios header param)
+    setAuthToken(code);
+    // //decode token to get user data
+    const decoded = jwt_decode(code);
     console.log(decoded);
-    //set current user
+    // //set current user
     dispatch(setCurrentUser(decoded));
   };
 };
