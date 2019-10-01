@@ -18,15 +18,15 @@ router.post("/register", (req, res) => {
     if (req.body.password !== req.body.passwordConfirmation) {
       return res.status(400).json({ error: "The passwords do not match" });
     }
-
     //create new user
     const newUser = new userModel({
       username: req.body.username,
       email: req.body.email,
       password: req.body.password,
-      avatarPicture: req.body.avatarPicture
+      avatarPicture: req.body.avatarPicture,
+      oAuth: false,
+      favoriteItineraries: []
     });
-
     //hash password before saving it
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -44,15 +44,12 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-
   //find user by email
-
   userModel.findOne({ email }).then(user => {
     //check if user exists
     if (!user) {
       return res.status(400).json({ emailnotfound: "Email not found" });
     }
-
     //check password
     bcrypt
       .compare(password, user.password)
@@ -73,10 +70,17 @@ router.post("/login", (req, res) => {
               expiresIn: 2592000
             },
             (err, token) => {
-              res.json({
-                success: true,
-                token: token
-              });
+              if (err) {
+                res.json({
+                  success: false,
+                  token: "There was an error"
+                });
+              } else {
+                res.json({
+                  success: true,
+                  token: token
+                });
+              }
             }
           );
         } else {
@@ -97,10 +101,11 @@ router.get(
       .findOne({ _id: req.user.id })
       .then(response => {
         // remove password before sending back
-        const userDetails = Object.assign({}, response._doc);
-        delete userDetails.password;
+        // const userDetails = Object.assign({}, response._doc);
+        // delete userDetails.password;
 
-        res.json(userDetails);
+        // res.json(userDetails);
+        res.json(response);
       })
       .catch(err => res.status(404).json({ error: "User does not exist!" }));
   }
@@ -220,17 +225,13 @@ router.get(
 router.get(
   "/google/redirect",
   passport.authenticate("google", { session: false }),
-
   (req, res) => {
-    const user = req.user[0];
-    console.log(user);
+    const user = req.user;
     const payload = {
       id: user.id,
       username: user.username,
       avatarPicture: user.avatarPicture
     };
-    console.log(req.query.code);
-
     // sign token
     jwt.sign(
       payload,
