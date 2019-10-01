@@ -91,14 +91,6 @@ export const setUserLoading = () => {
 export const googleAuth = code => {
   return dispatch => {
     console.log(code);
-    // axios.get("api/users/google/redirect").then(res => {
-    //   console.log(res);
-    //   if (res) {
-    //     // this.props.history.push("/");
-    //   }
-    // });
-    // console.log(token);
-
     localStorage.setItem("token", code);
     console.log(localStorage);
     // //send token to utils authorization (axios header param)
