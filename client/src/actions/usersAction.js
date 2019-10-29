@@ -64,13 +64,15 @@ export const logInUser = userData => {
 
 export const logOut = () => dispatch => {
   //remove token from local storage
-  localStorage.removeItem("token");
+  axios.get("api/users/logout").then(res => {
+    localStorage.removeItem("token");
 
-  //set authorization to false
-  setAuthToken(false);
+    //set authorization to false
+    setAuthToken(false);
 
-  //send empty current user
-  dispatch(setCurrentUser({}));
+    //send empty current user
+    dispatch(setCurrentUser({}));
+  });
 };
 
 //set logged in user

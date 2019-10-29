@@ -25,7 +25,8 @@ router.post("/register", (req, res) => {
       password: req.body.password,
       avatarPicture: req.body.avatarPicture,
       oAuth: false,
-      favoriteItineraries: []
+      favoriteItineraries: [],
+      loggedIn: false
     });
     //hash password before saving it
     bcrypt.genSalt(10, (err, salt) => {
@@ -56,33 +57,36 @@ router.post("/login", (req, res) => {
       .then(isMatch => {
         if (isMatch) {
           //create JWT payload
-          const payload = {
-            id: user.id,
-            username: user.username,
-            avatarPicture: user.avatarPicture
-          };
+          user.loggedIn = true;
+          user.save().then(currentUser => {
+            const payload = {
+              id: currentUser.id,
+              username: currentUser.username,
+              avatarPicture: currentUser.avatarPicture
+            };
 
-          //sign token
-          jwt.sign(
-            payload,
-            keys.secretOrKey,
-            {
-              expiresIn: 2592000
-            },
-            (err, token) => {
-              if (err) {
-                res.json({
-                  success: false,
-                  token: "There was an error"
-                });
-              } else {
-                res.json({
-                  success: true,
-                  token: token
-                });
+            //sign token
+            jwt.sign(
+              payload,
+              keys.secretOrKey,
+              {
+                expiresIn: 2592000
+              },
+              (err, token) => {
+                if (err) {
+                  res.json({
+                    success: false,
+                    token: "There was an error"
+                  });
+                } else {
+                  res.json({
+                    success: true,
+                    token: token
+                  });
+                }
               }
-            }
-          );
+            );
+          });
         } else {
           return res
             .status(400)
@@ -100,11 +104,13 @@ router.get(
     userModel
       .findOne({ _id: req.user.id })
       .then(response => {
+        console.log("response", response);
         // remove password before sending back
         // const userDetails = Object.assign({}, response._doc);
         // delete userDetails.password;
 
         // res.json(userDetails);
+
         res.json(response);
       })
       .catch(err => res.status(404).json({ error: "User does not exist!" }));
@@ -226,12 +232,15 @@ router.get(
   "/google/redirect",
   passport.authenticate("google", { session: false }),
   (req, res) => {
+    console.log("type of user", typeof req.user);
     const user = req.user;
+    console.log("user", user);
     const payload = {
       id: user.id,
       username: user.username,
       avatarPicture: user.avatarPicture
     };
+    console.log("payload", payload);
     // sign token
     jwt.sign(
       payload,
@@ -247,6 +256,18 @@ router.get(
         res.redirect("http://localhost:3000/" + resToken);
       }
     );
+  }
+);
+
+router.get(
+  "/logout",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    userModel.findOne({ _id: req.user.id }).then(user => {
+      user.loggedIn = false;
+      user.save();
+      res.json("logged out");
+    });
   }
 );
 

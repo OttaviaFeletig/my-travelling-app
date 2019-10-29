@@ -8,6 +8,71 @@ initialize {
     },
     "children": Array [
       Object {
+        "attribs": Object {},
+        "children": Array [
+          Object {
+            "data": "hello",
+            "next": null,
+            "parent": [Circular],
+            "prev": null,
+            "type": "text",
+          },
+        ],
+        "name": "p",
+        "namespace": "http://www.w3.org/1999/xhtml",
+        "next": Object {
+          "attribs": Object {
+            "href": "/cities",
+            "style": "height:100vh;display:flex;align-content:center;justify-content:center;align-items:center",
+          },
+          "children": Array [
+            Object {
+              "attribs": Object {
+                "alt": "arrow",
+                "src": "arrow.png",
+                "style": "height:30%",
+              },
+              "children": Array [],
+              "name": "img",
+              "namespace": "http://www.w3.org/1999/xhtml",
+              "next": null,
+              "parent": [Circular],
+              "prev": null,
+              "type": "tag",
+              "x-attribsNamespace": Object {
+                "alt": undefined,
+                "src": undefined,
+                "style": undefined,
+              },
+              "x-attribsPrefix": Object {
+                "alt": undefined,
+                "src": undefined,
+                "style": undefined,
+              },
+            },
+          ],
+          "name": "a",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "next": null,
+          "parent": [Circular],
+          "prev": [Circular],
+          "type": "tag",
+          "x-attribsNamespace": Object {
+            "href": undefined,
+            "style": undefined,
+          },
+          "x-attribsPrefix": Object {
+            "href": undefined,
+            "style": undefined,
+          },
+        },
+        "parent": [Circular],
+        "prev": null,
+        "type": "tag",
+        "x-attribsNamespace": Object {},
+        "x-attribsPrefix": Object {},
+      },
+      Object {
         "attribs": Object {
           "href": "/cities",
           "style": "height:100vh;display:flex;align-content:center;justify-content:center;align-items:center",
@@ -42,7 +107,26 @@ initialize {
         "namespace": "http://www.w3.org/1999/xhtml",
         "next": null,
         "parent": [Circular],
-        "prev": null,
+        "prev": Object {
+          "attribs": Object {},
+          "children": Array [
+            Object {
+              "data": "hello",
+              "next": null,
+              "parent": [Circular],
+              "prev": null,
+              "type": "text",
+            },
+          ],
+          "name": "p",
+          "namespace": "http://www.w3.org/1999/xhtml",
+          "next": [Circular],
+          "parent": [Circular],
+          "prev": null,
+          "type": "tag",
+          "x-attribsNamespace": Object {},
+          "x-attribsPrefix": Object {},
+        },
         "type": "tag",
         "x-attribsNamespace": Object {
           "href": undefined,

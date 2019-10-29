@@ -24,6 +24,7 @@ export class Home extends Component {
   render() {
     return (
       <div className="home">
+        <p>hello</p>
         <Link style={linkStyle} to="/cities">
           <img style={arrowStyle} src={arrow} alt="arrow" />
         </Link>

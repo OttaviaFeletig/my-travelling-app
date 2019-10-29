@@ -34,9 +34,12 @@ const usersSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-
   favoriteItineraries: {
     type: Array,
+    required: true
+  },
+  loggedIn: {
+    type: Boolean,
     required: true
   }
 });

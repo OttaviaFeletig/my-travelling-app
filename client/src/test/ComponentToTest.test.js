@@ -1,7 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
 import ComponentToTest from "../components/ComponentToTest";
-require("../setupTest");
+// require("../setupTest");
 
 it("ComponentToTest component snapshot", () => {
   const wrapper = shallow(<ComponentToTest />);
