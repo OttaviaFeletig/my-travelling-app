@@ -37,7 +37,7 @@
     "passport-jwt": "^4.0.0",
     "react-icons": "^3.6.1",
     "react-motion-ui-pack": "^0.10.3",
-    "validator": "^10.11.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "node-env-run": "^3.0.2",
